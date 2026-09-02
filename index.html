@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khata — Your Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1220;
+    --bg-2:#141b2e;
+    --surface:#141b2e;
+    --surface-2:#1b2540;
+    --paper:#f6f1e2;
+    --ink:#1a1f2b;
+    --gold:#d9a94b;
+    --gold-dim:#c1913a;
+    --gold-soft:rgba(217,169,75,0.14);
+    --emerald:#37b784;
+    --emerald-soft:rgba(55,183,132,0.14);
+    --coral:#e2624a;
+    --coral-soft:rgba(226,98,74,0.14);
+    --text:#eef1f7;
+    --muted:rgba(238,241,247,0.58);
+    --line:rgba(238,241,247,0.12);
+    --paper-line:rgba(26,31,43,0.13);
+    --shadow:0 10px 30px -12px rgba(0,0,0,0.55);
+    --grad1:rgba(217,169,75,0.09);
+    --grad2:rgba(55,183,132,0.07);
+    --btn-ink:#211505;
+  }
+  html[data-theme="light"]{
+    --bg:#f4f5f9;
+    --bg-2:#ffffff;
+    --surface:#ffffff;
+    --surface-2:#eef1f9;
+    --paper:#faf6ea;
+    --ink:#1a1f2b;
+    --gold:#b6822f;
+    --gold-dim:#9c6e26;
+    --gold-soft:rgba(182,130,47,0.1);
+    --emerald:#1f8a5f;
+    --emerald-soft:rgba(31,138,95,0.1);
+    --coral:#c8492f;
+    --coral-soft:rgba(200,73,47,0.09);
+    --text:#171b26;
+    --muted:rgba(23,27,38,0.56);
+    --line:rgba(23,27,38,0.12);
+    --paper-line:rgba(26,31,43,0.12);
+    --shadow:0 10px 26px -14px rgba(23,27,38,0.18);
+    --grad1:rgba(182,130,47,0.08);
+    --grad2:rgba(31,138,95,0.06);
+    --btn-ink:#fffaf0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1100px 620px at 15% -8%, var(--grad1), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, var(--grad2), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    padding:2.5rem 1.25rem 5rem;
+    transition:background-color 0.3s ease, color 0.3s ease;
+  }
+  .wrap{ max-width:1040px; margin:0 auto; }
+  h1,h2,.serif{ font-family:'Fraunces', serif; }
+  .field-label{
+    font-family:'Inter', sans-serif;
+    font-weight:500;
+    color:var(--muted);
+    font-size:0.86rem;
+    margin-bottom:0.45rem;
+    display:block;
+  }
+  input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1.5px solid var(--line);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    font-size:1.03rem;
+    padding:0.45rem 0.1rem 0.65rem;
+    outline:none;
+    transition:border-color 0.2s ease, background-color 0.2s ease;
+  }
+  input::placeholder{ color:rgba(238,241,247,0.28); }
+  input:focus{ border-bottom-color:var(--gold); }
+  input[data-on="paper"]{ color:var(--ink); border-bottom-color:var(--paper-line); }
+  input[data-on="paper"]::placeholder{ color:rgba(26,31,43,0.32); }
+  input[data-on="paper"]:focus{ border-bottom-color:var(--coral); }
+
+  button{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:0.93rem;
+    cursor:pointer;
+    border:none;
+    border-radius:7px;
+    padding:0.72rem 1.4rem;
+    background:var(--gold);
+    color:var(--btn-ink);
+    transition:transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  }
+  button:hover{ background:var(--gold-dim); box-shadow:0 6px 18px -6px rgba(217,169,75,0.5); transform:translateY(-1px); }
+  button:active{ transform:translateY(0) scale(0.98); }
+  button:disabled{ opacity:0.35; cursor:not-allowed; box-shadow:none; transform:none; }
+  button.ghost{
+    background:transparent;
+    color:var(--text);
+    border:1.5px solid var(--line);
+    font-weight:500;
+    padding:0.6rem 1.1rem;
+  }
+  button.ghost:hover{ border-color:var(--gold); background:var(--gold-soft); box-shadow:none; transform:none; }
+  button.small{ padding:0.5rem 0.9rem; font-size:0.85rem; }
+  button.icon-x{
+    background:transparent; border:none; color:inherit; opacity:0.45;
+    padding:0.1rem 0.3rem; font-size:1rem; line-height:1; border-radius:4px;
+  }
+  button.icon-x:hover{ opacity:1; background:rgba(226,98,74,0.12); box-shadow:none; transform:none; color:var(--coral); }
+
+  /* ---------- Onboarding ---------- */
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:2.8rem 2.6rem;
+    position:relative;
+    box-shadow:var(--shadow);
+    animation:riseIn 0.55s cubic-bezier(.16,1,.3,1) both;
+    transition:background-color 0.3s ease, border-color 0.3s ease;
+  }
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .eyebrow{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+    color:var(--gold);
+    font-size:0.9rem;
+    margin:0 0 0.5rem;
+  }
+  .card h1{ font-size:2.05rem; font-weight:600; margin:0 0 1.9rem; line-height:1.28; color:var(--text); }
+  .step-field{ margin-bottom:1.9rem; }
+  .card-actions{ display:flex; justify-content:flex-end; margin-top:2.2rem; }
+
+  .chip-row{ display:flex; flex-wrap:wrap; gap:0.55rem; margin:0.9rem 0 0; }
+  .chip{
+    background:var(--gold-soft); color:var(--gold);
+    border:1px solid rgba(217,169,75,0.35);
+    font-size:0.9rem; font-weight:500;
+    padding:0.4rem 0.5rem 0.4rem 0.9rem;
+    border-radius:999px;
+    display:flex; align-items:center; gap:0.4rem;
+    animation:chipIn 0.25s ease both;
+  }
+  @keyframes chipIn{ from{ opacity:0; transform:scale(0.85); } to{ opacity:1; transform:scale(1); } }
+  .add-row{ display:flex; gap:0.7rem; align-items:flex-end; }
+  .add-row .step-field{ flex:1; margin-bottom:0; }
+
+  /* ---------- Dashboard ---------- */
+  header.top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2.2rem; flex-wrap:wrap; gap:0.5rem; animation:riseIn 0.5s cubic-bezier(.16,1,.3,1) both; }
+  header.top h1{ font-size:2rem; font-weight:600; margin:0; }
+  header.top .tag{ font-family:'Inter', sans-serif; font-weight:500; color:var(--muted); font-size:0.92rem; letter-spacing:0.01em; }
+
+  .summary{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1rem;
+    margin-bottom:2.4rem;
+  }
+  .stat{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--line);
+    border-radius:10px;
+    padding:1.25rem 1.2rem;
+    box-shadow:var(--shadow);
+    opacity:0; transform:translateY(10px);
+    animation:riseIn 0.5s cubic-bezier(.16,1,.3,1) both;
+    transition:background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .summary .stat:nth-child(1){ animation-delay:0.02s; }
+  .summary .stat:nth-child(2){ animation-delay:0.08s; }
+  .summary .stat:nth-child(3){ animation-delay:0.14s; }
+  .summary .stat:nth-child(4){ animation-delay:0.2s; }
+  .stat .field-label{ margin-bottom:0.55rem; font-size:0.84rem; }
+  .stat .num{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:1.4rem; color:var(--text); font-variant-numeric:tabular-nums; }
+  .stat.income{ border-left-color:var(--emerald); }
+  .stat.income .num{ color:var(--emerald); }
+  .stat.expense{ border-left-color:var(--coral); }
+  .stat.expense .num{ color:var(--coral); }
+  .stat.closing{ background:var(--surface-2); border-left-color:var(--gold); }
+  .stat.closing .num{
+    color:var(--gold);
+    font-size:1.6rem;
+    padding-bottom:0.3rem;
+    border-bottom:3px double var(--gold);
+    display:inline-block;
+  }
+  @media (max-width: 640px){ .summary{ grid-template-columns:1fr 1fr; } }
+
+  .panels-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1.6rem;
+    align-items:start;
+    margin-bottom:2rem;
+  }
+  .panels-grid > section{ opacity:0; transform:translateY(10px); animation:riseIn 0.5s cubic-bezier(.16,1,.3,1) both; }
+  .panels-grid > section:nth-child(1){ animation-delay:0.26s; }
+  .panels-grid > section:nth-child(2){ animation-delay:0.32s; }
+  .panel-sheet-wrap{ opacity:0; transform:translateY(10px); animation:riseIn 0.5s cubic-bezier(.16,1,.3,1) both; animation-delay:0.38s; }
+  .sheet-head{
+    display:flex; justify-content:space-between; align-items:center; gap:1rem;
+    margin-bottom:1rem; padding-bottom:0.7rem; border-bottom:1px solid var(--line); flex-wrap:wrap;
+  }
+  .sheet-head .panel-title{ margin-bottom:0; padding-bottom:0; border-bottom:none; }
+  button.ghost.danger:hover{ border-color:var(--coral); background:var(--coral-soft); }
+  button.ghost.danger.danger-active{ background:var(--coral); color:#fff; border-color:var(--coral); }
+  button.ghost.danger.danger-active:hover{ background:var(--coral); }
+  @media (max-width: 760px){ .panels-grid{ grid-template-columns:1fr; } }
+  .panel-title{
+    font-size:1.1rem; font-weight:600; margin:0 0 1rem;
+    padding-bottom:0.7rem; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:0.55rem;
+  }
+  .panel-title::before{
+    content:''; width:7px; height:7px; border-radius:50%; background:var(--gold); flex:none;
+  }
+  #panel-services .panel-title::before{ background:var(--emerald); }
+  #panel-expenses .panel-title::before{ background:var(--coral); }
+  .panel-sheet-wrap{ margin-top:0.4rem; }
+
+  .service-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-top:3px solid var(--emerald);
+    border-radius:10px;
+    padding:1rem 1.4rem;
+    margin-bottom:0.75rem;
+    box-shadow:var(--shadow);
+    transition:border-color 0.2s ease, transform 0.2s ease, background-color 0.3s ease;
+  }
+  .service-card:hover{ border-color:rgba(55,183,132,0.4); transform:translateY(-2px); }
+  #panel-expenses .service-card{ border-top-color:var(--coral); }
+  #panel-expenses .service-card:hover{ border-color:rgba(226,98,74,0.4); }
+  .service-card .service-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.7rem; gap:0.6rem; }
+  .service-card .service-head h2{ font-size:1.1rem; font-weight:600; margin:0; }
+  .service-card .service-head-right{ display:flex; align-items:center; gap:0.55rem; flex:none; }
+  .service-card .service-total{ font-size:0.95rem; color:var(--emerald); font-weight:600; font-family:'Space Grotesk', sans-serif; }
+  .entry-form{ display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; }
+  .entry-form .step-field{ flex:1; min-width:110px; margin-bottom:0; }
+  .entry-form .amt{ max-width:none; }
+  .srno-col{ text-align:center; color:rgba(26,31,43,0.48); }
+
+  .add-service-row{ display:flex; gap:0.7rem; margin-top:0.6rem; }
+  .add-service-row input{ flex:1; }
+
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:0.9rem;
+  }
+  @media (max-width:900px){ .services-grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:520px){ .services-grid{ grid-template-columns:1fr; } }
+  .svc-tile{
+    display:grid; grid-template-rows:auto auto auto; gap:1px; background:var(--line);
+    animation:rowIn 0.3s ease both;
+  }
+  .svc-tile.row-leaving{ animation:rowOut 0.25s ease forwards; }
+  .svc-cell{ background:var(--surface); padding:0.7rem 0.8rem; transition:background-color 0.3s ease; }
+  .svc-header{
+    display:flex; justify-content:space-between; align-items:center; gap:0.4rem;
+    background:var(--surface-2); font-weight:600; font-size:0.92rem;
+  }
+  .svc-header span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .svc-input-cell{ display:flex; gap:0.5rem; align-items:center; }
+  .svc-input-cell input{ flex:1; min-width:0; font-size:0.92rem; padding:0.3rem 0.1rem 0.35rem; }
+  .svc-input-cell button{ padding:0.4rem 0.7rem; font-size:0.8rem; flex:none; }
+  .svc-total-cell{ display:flex; justify-content:space-between; align-items:center; }
+  .svc-total-cell .lbl{ color:var(--muted); font-size:0.82rem; }
+  .svc-total-cell .val{ font-family:'Space Grotesk', sans-serif; font-weight:600; color:var(--emerald); font-variant-numeric:tabular-nums; }
+
+  .services-grid .empty-note{ padding:1.1rem; }
+
+  .empty-note{ font-family:'Inter', sans-serif; font-style:normal; color:var(--muted); padding:1rem 0; font-size:0.92rem; }
+
+  /* ---------- Record sheet (paper) ---------- */
+  .sheet{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:10px;
+    padding:0.4rem 1.6rem 1.2rem;
+    max-height:420px;
+    overflow-y:auto;
+    box-shadow:var(--shadow);
+    transition:background-color 0.3s ease;
+  }
+  table{ width:100%; border-collapse:collapse; font-size:0.92rem; font-family:'Inter', sans-serif; }
+  thead th{
+    text-align:left; font-family:'Inter', sans-serif; font-weight:600;
+    color:rgba(26,31,43,0.5); font-size:0.82rem; padding:0.9rem 0.5rem 0.5rem;
+    position:sticky; top:0; background:var(--paper);
+    border-bottom:1.5px solid rgba(26,31,43,0.3);
+  }
+  tbody tr{ transition:background-color 0.15s ease; animation:rowIn 0.3s ease both; }
+  tbody tr:hover{ background:rgba(26,31,43,0.035); }
+  tbody tr.row-leaving{ animation:rowOut 0.25s ease forwards; }
+  @keyframes rowIn{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes rowOut{ to{ opacity:0; transform:translateX(8px); } }
+  tbody td{ padding:0.65rem 0.5rem; border-bottom:1px solid var(--paper-line); }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.amt-income{ color:#2f8f63; font-weight:600; font-family:'Space Grotesk', sans-serif; }
+  td.amt-expense{ color:var(--coral); font-weight:600; font-family:'Space Grotesk', sans-serif; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+
+  .toast{
+    position:fixed; top:1.5rem; right:1.5rem; z-index:60;
+    background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--gold);
+    border-radius:9px; padding:0.85rem 1.2rem; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:0.6rem;
+    font-size:0.92rem; color:var(--text);
+    transform:translateX(120%); opacity:0;
+    max-width:280px;
+  }
+  .toast.income{ border-left-color:var(--emerald); }
+  .toast.expense{ border-left-color:var(--coral); }
+  .toast.show{ animation:toastIn 0.35s cubic-bezier(.16,1,.3,1) forwards, toastOut 0.3s ease 2.4s forwards; }
+  @keyframes toastIn{ from{ transform:translateX(120%); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+  @keyframes toastOut{ to{ transform:translateX(120%); opacity:0; } }
+  .toast .dot{ width:9px; height:9px; border-radius:50%; background:var(--gold); flex:none; }
+  .toast.income .dot{ background:var(--emerald); }
+  .toast.expense .dot{ background:var(--coral); }
+
+  .loading-veil{ text-align:center; padding:4rem 0; color:var(--muted); font-family:'Inter', sans-serif; }
+
+  .theme-toggle{
+    position:fixed; top:1.4rem; left:1.4rem; z-index:55;
+    display:flex; align-items:center; gap:0.5rem;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--muted); font-weight:500; font-size:0.85rem;
+    border-radius:999px; padding:0.5rem 0.9rem 0.5rem 0.7rem;
+    box-shadow:var(--shadow);
+    transition:background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+  }
+  .theme-toggle:hover{ color:var(--text); box-shadow:var(--shadow); transform:none; background:var(--surface); }
+  .theme-toggle .icon{ font-size:0.95rem; line-height:1; display:inline-block; transition:transform 0.4s cubic-bezier(.16,1,.3,1); }
+
+  .print-btn{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    background:transparent; color:var(--text);
+    border:1.5px solid var(--line); font-weight:500; font-size:0.9rem;
+    padding:0.55rem 1.1rem; border-radius:8px;
+  }
+  .print-btn:hover{ border-color:var(--gold); background:var(--gold-soft); box-shadow:none; transform:none; }
+  .print-btn .icon{ font-size:1rem; line-height:1; transition:transform 0.35s ease; }
+  .print-btn.printing .icon{ animation:printPulse 0.6s ease; }
+  @keyframes printPulse{
+    0%{ transform:scale(1); }
+    35%{ transform:scale(0.8) translateY(2px); }
+    70%{ transform:scale(1.08); }
+    100%{ transform:scale(1); }
+  }
+
+  .print-only{ display:none; }
+
+  @media print{
+    .theme-toggle, .print-btn, .toast, #loading, .panels-grid, #btn-clear-all{ display:none !important; }
+    body{
+      background:#ffffff !important; color:#101418 !important;
+      padding:0; font-family:'Inter', sans-serif;
+    }
+    .wrap{ max-width:100%; }
+    .card{ display:none; }
+    .print-only{ display:block; margin-bottom:1.2rem; }
+    .print-only h1{ font-size:1.5rem; margin:0 0 0.15rem; color:#101418; }
+    .print-only p{ margin:0; color:#4b5160; font-size:0.9rem; }
+    header.top .tag{ display:none; }
+    .summary{ break-inside:avoid; box-shadow:none; }
+    .stat, .service-card, .sheet, .card{ box-shadow:none !important; animation:none !important; }
+    .stat{ border:1px solid #d8dae0; background:#fff; }
+    .stat.closing{ background:#f5f2e9; }
+    .sheet{
+      background:#ffffff; max-height:none; overflow:visible;
+      padding:0; border:1px solid #d8dae0; border-radius:6px;
+    }
+    thead th{ position:static; background:#f5f2e9; color:#3c4150; }
+    tbody tr{ animation:none !important; }
+    .panel-sheet-wrap .panel-title{ margin-top:1.4rem; }
+    button.icon-x{ display:none; }
+    .empty-note{ color:#4b5160; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
+  <span class="icon" id="theme-icon">🌙</span><span id="theme-label">Dark</span>
+</button>
+<div class="wrap">
+
+  <div id="loading" class="loading-veil">Opening the ledger…</div>
+
+  <!-- STEP 1 -->
+  <div class="screen" id="screen-1">
+    <div class="card">
+      <p class="eyebrow">Khata</p>
+      <h1>Let's set up your ledger.<br>What's your business called?</h1>
+      <div class="step-field">
+        <label class="field-label">Business name</label>
+        <input type="text" id="input-business-name" placeholder="e.g. Al-Karam Traders" autocomplete="off">
+      </div>
+      <div class="card-actions">
+        <button id="btn-step1-next">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="screen" id="screen-2">
+    <div class="card">
+      <p class="eyebrow" id="step2-eyebrow">Khata</p>
+      <h1>What do you offer, and where does the ledger start?</h1>
+
+      <div class="step-field">
+        <label class="field-label">Add a service</label>
+        <div class="add-row">
+          <div class="step-field" style="margin-bottom:0;">
+            <input type="text" id="input-service-name" placeholder="e.g. Home delivery, Tailoring, Consulting" autocomplete="off">
+          </div>
+          <button class="ghost small" id="btn-add-service">Add</button>
+        </div>
+        <div class="chip-row" id="service-chips"></div>
+      </div>
+
+      <div class="step-field" style="margin-top:2rem;">
+        <label class="field-label">Opening balance (Rs)</label>
+        <input type="number" id="input-opening-balance" placeholder="0" min="0" step="1">
+      </div>
+
+      <div class="card-actions">
+        <button class="ghost" id="btn-step2-back" style="margin-right:0.7rem;">Back</button>
+        <button id="btn-step2-next">Start my ledger</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="screen" id="screen-dashboard">
+    <header class="top">
+      <h1 id="dash-business-name">Business</h1>
+      <div style="display:flex; align-items:center; gap:0.9rem;">
+        <span class="tag">Khata</span>
+        <button class="print-btn" id="btn-print" type="button">
+          <span class="icon">🖨️</span><span>Print</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="print-only" id="print-header">
+      <h1 id="print-business-name">Business</h1>
+      <p id="print-date">Statement generated on —</p>
+    </div>
+
+    <div class="summary">
+      <div class="stat">
+        <span class="field-label">Opening balance</span>
+        <div class="num" id="stat-opening">Rs 0</div>
+      </div>
+      <div class="stat income">
+        <span class="field-label">Income</span>
+        <div class="num" id="stat-income">Rs 0</div>
+      </div>
+      <div class="stat expense">
+        <span class="field-label">Expenses</span>
+        <div class="num" id="stat-expense">Rs 0</div>
+      </div>
+      <div class="stat closing">
+        <span class="field-label">Closing balance</span>
+        <div class="num" id="stat-closing">Rs 0</div>
+      </div>
+    </div>
+
+    <div class="panels-grid">
+      <!-- SERVICES -->
+      <section id="panel-services">
+        <h2 class="panel-title">Services</h2>
+        <div class="services-grid" id="services-grid"></div>
+
+        <div class="add-service-row">
+          <input type="text" id="input-new-service" placeholder="Add another service">
+          <button class="ghost small" id="btn-new-service">Add service</button>
+        </div>
+      </section>
+
+      <!-- EXPENSES -->
+      <section id="panel-expenses">
+        <h2 class="panel-title">Expenses</h2>
+        <div class="service-card">
+          <div class="service-head">
+            <h2>Log an expense</h2>
+          </div>
+          <div class="entry-form">
+            <div class="step-field">
+              <label class="field-label">What was it for</label>
+              <input type="text" id="input-expense-desc" placeholder="e.g. Fuel, Raw material, Rent">
+            </div>
+            <div class="step-field amt">
+              <label class="field-label">Amount (Rs)</label>
+              <input type="number" id="input-expense-amount" placeholder="0" min="0" step="1">
+            </div>
+            <button class="small" id="btn-add-expense">Add expense</button>
+          </div>
+        </div>
+        <div id="expense-list"></div>
+      </section>
+    </div>
+
+    <!-- RECORD SHEET -->
+    <section class="panel-sheet-wrap">
+      <div class="sheet-head">
+        <h2 class="panel-title">Record sheet</h2>
+        <button class="ghost small danger" id="btn-clear-all" type="button">Clear all</button>
+      </div>
+      <div class="sheet" id="sheet-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="srno-col">Sr. No</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th class="num">Amount</th>
+              <th class="num">Balance</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="sheet-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Recorded</span></div>
+
+<script>
+(function(){
+  const STORAGE_SETUP = 'khata:setup';
+  const STORAGE_RECORDS = 'khata:records';
+  const STORAGE_THEME = 'khata:theme';
+
+  let setup = null;          // { businessName, services: [{id,name}], openingBalance }
+  let records = [];          // [{id,type,date,description,amount}]
+  let pendingServices = [];  // used only during onboarding step 2
+
+  const $ = (id) => document.getElementById(id);
+
+  function fmt(n){
+    const v = Math.round(Number(n) || 0);
+    const sign = v < 0 ? '-' : '';
+    return sign + 'Rs ' + Math.abs(v).toLocaleString('en-US');
+  }
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  function todayLabel(){
+    return new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  async function storageGet(key){
+    try{
+      const res = await window.storage.get(key, false);
+      return res ? JSON.parse(res.value) : null;
+    }catch(e){ return null; }
+  }
+  async function storageSet(key, value){
+    try{ await window.storage.set(key, JSON.stringify(value), false); }
+    catch(e){ console.error('storage set failed', e); }
+  }
+
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    $(id).classList.add('active');
+  }
+
+  // ---------- Onboarding: step 1 ----------
+  $('btn-step1-next').addEventListener('click', () => {
+    const name = $('input-business-name').value.trim();
+    if(!name){ $('input-business-name').focus(); return; }
+    pendingServices = [];
+    $('step2-eyebrow').textContent = name;
+    renderChips();
+    showScreen('screen-2');
+  });
+  $('input-business-name').addEventListener('keydown', e => { if(e.key === 'Enter') $('btn-step1-next').click(); });
+
+  // ---------- Onboarding: step 2 ----------
+  function renderChips(){
+    const row = $('service-chips');
+    row.innerHTML = '';
+    pendingServices.forEach((s, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.innerHTML = `<span>${escapeHtml(s)}</span>`;
+      const x = document.createElement('button');
+      x.className = 'icon-x'; x.textContent = '×';
+      x.addEventListener('click', () => { pendingServices.splice(i,1); renderChips(); });
+      chip.appendChild(x);
+      row.appendChild(chip);
+    });
+  }
+  function addPendingService(){
+    const input = $('input-service-name');
+    const v = input.value.trim();
+    if(!v) return;
+    pendingServices.push(v);
+    input.value = '';
+    renderChips();
+    input.focus();
+  }
+  $('btn-add-service').addEventListener('click', addPendingService);
+  $('input-service-name').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); addPendingService(); } });
+  $('btn-step2-back').addEventListener('click', () => showScreen('screen-1'));
+
+  $('btn-step2-next').addEventListener('click', async () => {
+    if(pendingServices.length === 0){ $('input-service-name').focus(); return; }
+    const businessName = $('input-business-name').value.trim();
+    const opening = Number($('input-opening-balance').value) || 0;
+    setup = {
+      businessName,
+      services: pendingServices.map(name => ({ id: uid(), name })),
+      openingBalance: opening
+    };
+    records = [];
+    await storageSet(STORAGE_SETUP, setup);
+    await storageSet(STORAGE_RECORDS, records);
+    enterDashboard();
+  });
+
+  // ---------- Dashboard ----------
+  function enterDashboard(){
+    $('dash-business-name').textContent = setup.businessName;
+    $('print-business-name').textContent = setup.businessName;
+    $('print-date').textContent = 'Statement generated on ' + todayLabel();
+    renderServiceCards();
+    renderExpenseList();
+    renderSheet();
+    renderSummary();
+    showScreen('screen-dashboard');
+  }
+
+  function totals(){
+    let income = 0, expense = 0;
+    records.forEach(r => { if(r.type === 'income') income += r.amount; else expense += r.amount; });
+    return { income, expense, closing: (setup.openingBalance + income - expense) };
+  }
+
+  function animateNumber(el, to){
+    const from = Number(el.dataset.val || 0);
+    if(from === to){ el.textContent = fmt(to); return; }
+    const start = performance.now();
+    const duration = 450;
+    function step(now){
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const current = Math.round(from + (to - from) * eased);
+      el.textContent = fmt(current);
+      if(p < 1){ requestAnimationFrame(step); }
+      else{ el.dataset.val = to; }
+    }
+    el.dataset.val = from;
+    requestAnimationFrame(step);
+  }
+
+  function renderSummary(){
+    const t = totals();
+    animateNumber($('stat-opening'), setup.openingBalance);
+    animateNumber($('stat-income'), t.income);
+    animateNumber($('stat-expense'), t.expense);
+    animateNumber($('stat-closing'), t.closing);
+  }
+
+  function serviceTotal(serviceId){
+    return records
+      .filter(r => r.type === 'income' && r.serviceId === serviceId)
+      .reduce((sum, r) => sum + r.amount, 0);
+  }
+
+  function renderServiceCards(){
+    const grid = $('services-grid');
+    grid.innerHTML = '';
+    if(setup.services.length === 0){
+      grid.innerHTML = `<p class="empty-note">No services yet. Add one below.</p>`;
+      return;
+    }
+    setup.services.forEach(svc => {
+      const tile = document.createElement('div');
+      tile.className = 'svc-tile';
+      tile.innerHTML = `
+        <div class="svc-cell svc-header">
+          <span title="${escapeHtml(svc.name)}">${escapeHtml(svc.name)}</span>
+          <button class="icon-x" data-role="delete-service" title="Delete service">×</button>
+        </div>
+        <div class="svc-cell svc-input-cell">
+          <input type="number" placeholder="0" min="0" step="1" data-role="amount">
+          <button class="small" data-role="add">Add</button>
+        </div>
+        <div class="svc-cell svc-total-cell">
+          <span class="lbl">Total</span>
+          <span class="val">${fmt(serviceTotal(svc.id))}</span>
+        </div>
+      `;
+      const amountInput = tile.querySelector('[data-role="amount"]');
+      const addBtn = tile.querySelector('[data-role="add"]');
+      const deleteBtn = tile.querySelector('[data-role="delete-service"]');
+      deleteBtn.addEventListener('click', () => deleteService(svc.id));
+      const submit = () => {
+        const amount = Number(amountInput.value);
+        if(!amount || amount <= 0){ amountInput.focus(); return; }
+        addRecord({
+          type:'income',
+          serviceId: svc.id,
+          description: svc.name,
+          amount
+        });
+        amountInput.value = '';
+        renderServiceCards();
+      };
+      addBtn.addEventListener('click', submit);
+      amountInput.addEventListener('keydown', e => { if(e.key === 'Enter') submit(); });
+      grid.appendChild(tile);
+    });
+  }
+
+  function deleteService(id){
+    setup.services = setup.services.filter(s => s.id !== id);
+    storageSet(STORAGE_SETUP, setup);
+    renderServiceCards();
+    renderExpenseList();
+  }
+
+  $('btn-new-service').addEventListener('click', () => {
+    const input = $('input-new-service');
+    const v = input.value.trim();
+    if(!v) return;
+    setup.services.push({ id: uid(), name: v });
+    input.value = '';
+    storageSet(STORAGE_SETUP, setup);
+    renderServiceCards();
+    renderExpenseList();
+  });
+  $('input-new-service').addEventListener('keydown', e => { if(e.key === 'Enter') $('btn-new-service').click(); });
+
+  function renderExpenseList(){
+    const wrap = $('expense-list');
+    const items = records.filter(r => r.type === 'expense');
+    if(items.length === 0){
+      wrap.innerHTML = '<p class="empty-note">No expenses logged yet.</p>';
+      return;
+    }
+    const count = Math.max(1, setup.services.length);
+    wrap.innerHTML = `<p class="empty-note" style="padding:0.4rem 0 0.8rem; font-size:0.85rem;">Showing the ${count} most recent — full history is in the record sheet.</p>`;
+    items.slice(-count).reverse().forEach(r => {
+      const row = document.createElement('div');
+      row.className = 'service-card';
+      row.style.padding = '1rem 1.5rem';
+      row.innerHTML = `
+        <div class="service-head" style="margin-bottom:0;">
+          <div>
+            <div style="font-family:'Fraunces',serif; font-weight:600;">${escapeHtml(r.description)}</div>
+            <div style="color:var(--muted); font-size:0.85rem;">${r.date}</div>
+          </div>
+          <span style="color:var(--coral); font-weight:600; font-family:'Space Grotesk', sans-serif;">${fmt(r.amount)}</span>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  $('btn-add-expense').addEventListener('click', () => {
+    const desc = $('input-expense-desc').value.trim();
+    const amount = Number($('input-expense-amount').value);
+    if(!desc || !amount || amount <= 0) return;
+    addRecord({ type:'expense', description: desc, amount });
+    $('input-expense-desc').value = '';
+    $('input-expense-amount').value = '';
+    renderExpenseList();
+  });
+  $('input-expense-amount').addEventListener('keydown', e => { if(e.key === 'Enter') $('btn-add-expense').click(); });
+
+  function renderSheet(){
+    const body = $('sheet-body');
+    const clearBtn = $('btn-clear-all');
+    clearBtn.disabled = records.length === 0;
+    if(records.length === 0){
+      clearBtn.dataset.confirming = 'false';
+      clearBtn.classList.remove('danger-active');
+      clearBtn.textContent = 'Clear all';
+    }
+    if(records.length === 0){
+      body.innerHTML = `<tr><td colspan="6"><p class="empty-note">No entries yet. Add a service payment or an expense to start your record sheet.</p></td></tr>`;
+      return;
+    }
+    let running = setup.openingBalance;
+    body.innerHTML = '';
+    records.forEach((r, i) => {
+      running += r.type === 'income' ? r.amount : -r.amount;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="srno-col">${i + 1}</td>
+        <td>${r.date}</td>
+        <td>${escapeHtml(r.description)}</td>
+        <td class="num ${r.type === 'income' ? 'amt-income' : 'amt-expense'}">${r.type === 'income' ? '+' : '−'}${fmt(r.amount)}</td>
+        <td class="num">${fmt(running)}</td>
+        <td><button class="icon-x" data-id="${r.id}" title="Delete entry">×</button></td>
+      `;
+      tr.querySelector('.icon-x').addEventListener('click', () => deleteRecord(r.id));
+      body.appendChild(tr);
+    });
+    const sheetEl = $('sheet-container');
+    sheetEl.scrollTop = sheetEl.scrollHeight;
+  }
+
+  function deleteRecord(id){
+    const row = $('sheet-body').querySelector(`button[data-id="${id}"]`)?.closest('tr');
+    const finish = () => {
+      records = records.filter(r => r.id !== id);
+      storageSet(STORAGE_RECORDS, records);
+      renderServiceCards();
+      renderExpenseList();
+      renderSheet();
+      renderSummary();
+    };
+    if(row){
+      row.classList.add('row-leaving');
+      row.addEventListener('animationend', finish, { once:true });
+    }else{
+      finish();
+    }
+  }
+
+  function addRecord(partial){
+    const record = Object.assign({ id: uid(), date: todayLabel() }, partial);
+    records.push(record);
+    storageSet(STORAGE_RECORDS, records);
+    renderSheet();
+    renderSummary();
+    showToast(record);
+  }
+
+  function showToast(record){
+    const el = $('toast');
+    const label = record.type === 'income' ? 'Income recorded' : 'Expense recorded';
+    $('toast-text').textContent = `${label} · ${fmt(record.amount)}`;
+    el.classList.remove('income', 'expense', 'show');
+    el.classList.add(record.type);
+    void el.offsetWidth;
+    el.classList.add('show');
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str == null ? '' : str;
+    return d.innerHTML;
+  }
+
+  // ---------- Clear all ----------
+  let clearConfirmTimer = null;
+  $('btn-clear-all').addEventListener('click', () => {
+    const btn = $('btn-clear-all');
+    if(records.length === 0) return;
+
+    if(btn.dataset.confirming === 'true'){
+      clearTimeout(clearConfirmTimer);
+      btn.dataset.confirming = 'false';
+      btn.classList.remove('danger-active');
+      btn.textContent = 'Clear all';
+      records = [];
+      storageSet(STORAGE_RECORDS, records);
+      renderServiceCards();
+      renderExpenseList();
+      renderSheet();
+      renderSummary();
+      return;
+    }
+
+    btn.dataset.confirming = 'true';
+    btn.classList.add('danger-active');
+    btn.textContent = 'Click again to confirm';
+    clearConfirmTimer = setTimeout(() => {
+      btn.dataset.confirming = 'false';
+      btn.classList.remove('danger-active');
+      btn.textContent = 'Clear all';
+    }, 3000);
+  });
+
+  // ---------- Print ----------
+  $('btn-print').addEventListener('click', () => {
+    const btn = $('btn-print');
+    btn.classList.add('printing');
+    setTimeout(() => btn.classList.remove('printing'), 650);
+    try{
+      window.print();
+    }catch(e){
+      console.error('Print failed', e);
+    }
+  });
+
+  // ---------- Theme ----------
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon = $('theme-icon');
+    icon.style.transform = 'rotate(180deg)';
+    setTimeout(() => {
+      icon.textContent = theme === 'light' ? '☀️' : '🌙';
+      icon.style.transform = 'rotate(0deg)';
+    }, 200);
+    $('theme-label').textContent = theme === 'light' ? 'Light' : 'Dark';
+  }
+  $('theme-toggle').addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    storageSet(STORAGE_THEME, next);
+  });
+
+  // ---------- Boot ----------
+  async function boot(){
+    const savedTheme = await storageGet(STORAGE_THEME);
+    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
+    const savedSetup = await storageGet(STORAGE_SETUP);
+    $('loading').style.display = 'none';
+    if(savedSetup && savedSetup.businessName && savedSetup.services && savedSetup.services.length){
+      setup = savedSetup;
+      records = (await storageGet(STORAGE_RECORDS)) || [];
+      enterDashboard();
+    }else{
+      showScreen('screen-1');
+    }
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
