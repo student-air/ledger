@@ -6,7 +6,7 @@
 <title>Khata — Your Ledger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0d1220;
@@ -62,15 +62,15 @@
       radial-gradient(900px 500px at 100% 0%, var(--grad2), transparent 55%),
       var(--bg);
     color:var(--text);
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     min-height:100vh;
     padding:2.5rem 1.25rem 5rem;
     transition:background-color 0.3s ease, color 0.3s ease;
   }
   .wrap{ max-width:1040px; margin:0 auto; }
-  h1,h2,.serif{ font-family:'Fraunces', serif; }
+  h1,h2,.serif{ font-family:'Fraunces', 'Noto Nastaliq Urdu', serif; }
   .field-label{
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     font-weight:500;
     color:var(--muted);
     font-size:0.86rem;
@@ -83,7 +83,7 @@
     border:none;
     border-bottom:1.5px solid var(--line);
     color:var(--text);
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     font-size:1.03rem;
     padding:0.45rem 0.1rem 0.65rem;
     outline:none;
@@ -96,7 +96,7 @@
   input[data-on="paper"]:focus{ border-bottom-color:var(--coral); }
 
   button{
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     font-weight:600;
     font-size:0.93rem;
     cursor:pointer;
@@ -144,7 +144,7 @@
     to{ opacity:1; transform:translateY(0); }
   }
   .eyebrow{
-    font-family:'Inter', sans-serif;
+    font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     font-weight:600;
     letter-spacing:0.01em;
     color:var(--gold);
@@ -172,7 +172,7 @@
   /* ---------- Dashboard ---------- */
   header.top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2.2rem; flex-wrap:wrap; gap:0.5rem; animation:riseIn 0.5s cubic-bezier(.16,1,.3,1) both; }
   header.top h1{ font-size:2rem; font-weight:600; margin:0; }
-  header.top .tag{ font-family:'Inter', sans-serif; font-weight:500; color:var(--muted); font-size:0.92rem; letter-spacing:0.01em; }
+  header.top .tag{ font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; font-weight:500; color:var(--muted); font-size:0.92rem; letter-spacing:0.01em; }
 
   .summary{
     display:grid;
@@ -301,7 +301,7 @@
 
   .services-grid .empty-note{ padding:1.1rem; }
 
-  .empty-note{ font-family:'Inter', sans-serif; font-style:normal; color:var(--muted); padding:1rem 0; font-size:0.92rem; }
+  .empty-note{ font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; font-style:normal; color:var(--muted); padding:1rem 0; font-size:0.92rem; }
 
   /* ---------- Record sheet (paper) ---------- */
   .sheet{
@@ -314,9 +314,9 @@
     box-shadow:var(--shadow);
     transition:background-color 0.3s ease;
   }
-  table{ width:100%; border-collapse:collapse; font-size:0.92rem; font-family:'Inter', sans-serif; }
+  table{ width:100%; border-collapse:collapse; font-size:0.92rem; font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; }
   thead th{
-    text-align:left; font-family:'Inter', sans-serif; font-weight:600;
+    text-align:left; font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; font-weight:600;
     color:rgba(26,31,43,0.5); font-size:0.82rem; padding:0.9rem 0.5rem 0.5rem;
     position:sticky; top:0; background:var(--paper);
     border-bottom:1.5px solid rgba(26,31,43,0.3);
@@ -350,10 +350,13 @@
   .toast.income .dot{ background:var(--emerald); }
   .toast.expense .dot{ background:var(--coral); }
 
-  .loading-veil{ text-align:center; padding:4rem 0; color:var(--muted); font-family:'Inter', sans-serif; }
+  .loading-veil{ text-align:center; padding:4rem 0; color:var(--muted); font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; }
 
-  .theme-toggle{
+  .top-controls{
     position:fixed; top:1.4rem; left:1.4rem; z-index:55;
+    display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;
+  }
+  .theme-toggle{
     display:flex; align-items:center; gap:0.5rem;
     background:var(--surface); border:1px solid var(--line);
     color:var(--muted); font-weight:500; font-size:0.85rem;
@@ -388,10 +391,10 @@
   }
 
   @media print{
-    .theme-toggle, .print-btn, .toast, #loading, .panels-grid, #btn-clear-all{ display:none !important; }
+    .top-controls, .print-btn, .toast, #loading, .panels-grid, #btn-clear-all{ display:none !important; }
     html, body{
       background:#ffffff !important; color:#171b22 !important;
-      padding:0; font-family:'Inter', sans-serif;
+      padding:0; font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     }
     .wrap{ max-width:100%; padding-bottom:1.5rem; }
     .card{ display:none; }
@@ -403,12 +406,12 @@
       border-bottom:2.5px solid #d9a94b;
     }
     .print-only h1{
-      font-family:'Fraunces', serif; font-weight:600; font-size:1.7rem;
+      font-family:'Fraunces', 'Noto Nastaliq Urdu', serif; font-weight:600; font-size:1.7rem;
       margin:0 0 0.2rem; color:#14181f; letter-spacing:0.01em;
     }
     .print-only p{ margin:0; color:#5a5f6c; font-size:0.85rem; }
     .print-only .print-kicker{
-      font-family:'Inter', sans-serif; font-weight:600; font-size:0.72rem;
+      font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif; font-weight:600; font-size:0.72rem;
       letter-spacing:0.08em; text-transform:uppercase; color:#b6822f; margin:0 0 0.3rem;
     }
     .print-only .print-meta{ text-align:right; }
@@ -432,7 +435,7 @@
     /* ---- Record sheet ---- */
     .panel-sheet-wrap{ opacity:1 !important; transform:none !important; animation:none !important; }
     .sheet-head{ border-bottom:1px solid #dfe1e7; }
-    .sheet-head .panel-title{ font-family:'Fraunces', serif; font-size:1.1rem; color:#171b22; }
+    .sheet-head .panel-title{ font-family:'Fraunces', 'Noto Nastaliq Urdu', serif; font-size:1.1rem; color:#171b22; }
     .panel-title::before{ display:none; }
     .sheet{
       background:#ffffff; max-height:none; overflow:visible;
@@ -461,30 +464,62 @@
       display:flex; justify-content:space-between; align-items:baseline;
       font-size:0.78rem; color:#6b7080;
     }
-    .print-footer .footer-name{ font-weight:700; letter-spacing:0.02em; color:#171b22; font-family:'Fraunces', serif; }
+    .print-footer .footer-name{ font-weight:700; letter-spacing:0.02em; color:#171b22; font-family:'Fraunces', 'Noto Nastaliq Urdu', serif; }
     .print-footer .footer-tag{ color:#5a5f6c; font-size:0.76rem; }
   }
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
-  <span class="icon" id="theme-icon">🌙</span><span id="theme-label">Dark</span>
-</button>
+<div class="top-controls">
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
+    <span class="icon" id="theme-icon">🌙</span><span id="theme-label">Dark</span>
+  </button>
+  <button class="theme-toggle" id="lang-toggle" type="button" aria-label="Toggle Urdu and English">
+    <span class="icon">🌐</span><span id="lang-label">English</span>
+  </button>
+  <button class="theme-toggle" id="btn-logout" type="button" style="display:none;">
+    <span class="icon">🚪</span><span>Sign out</span>
+  </button>
+</div>
 <div class="wrap">
 
-  <div id="loading" class="loading-veil">Opening the ledger…</div>
+  <div id="loading" class="loading-veil" data-i18n="loading">Opening the ledger…</div>
+
+  <!-- AUTH -->
+  <div class="screen" id="screen-auth">
+    <div class="card">
+      <p class="eyebrow" data-i18n="appTag">Khata</p>
+      <h1 id="auth-heading">Sign in to your ledger</h1>
+      <div class="step-field">
+        <label class="field-label">Email</label>
+        <input type="email" id="input-auth-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="step-field">
+        <label class="field-label">Password</label>
+        <input type="password" id="input-auth-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <p id="auth-error" style="display:none; font-size:0.85rem; margin:0.2rem 0 0;"></p>
+      <div class="card-actions" style="justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+        <div style="display:flex; flex-direction:column; gap:0.3rem; align-items:flex-start;">
+          <button class="ghost small" id="btn-auth-toggle" type="button">Need an account? Sign up</button>
+          <button class="ghost small" id="btn-forgot-password" type="button" style="border:none; padding-left:0; color:var(--muted);">Forgot password?</button>
+        </div>
+        <button id="btn-auth-submit" type="button">Sign in</button>
+      </div>
+    </div>
+  </div>
 
   <!-- STEP 1 -->
   <div class="screen" id="screen-1">
     <div class="card">
-      <p class="eyebrow">Khata</p>
-      <h1>Let's set up your ledger.<br>What's your business called?</h1>
+      <p class="eyebrow" data-i18n="appTag">Khata</p>
+      <h1 data-i18n="step1Heading">Let's set up your ledger. What's your business called?</h1>
       <div class="step-field">
-        <label class="field-label">Business name</label>
-        <input type="text" id="input-business-name" placeholder="e.g. Al-Karam Traders" autocomplete="off">
+        <label class="field-label" data-i18n="businessNameLabel">Business name</label>
+        <input type="text" id="input-business-name" data-i18n-placeholder="businessNamePlaceholder" placeholder="e.g. Al-Karam Traders" autocomplete="off">
       </div>
       <div class="card-actions">
-        <button id="btn-step1-next">Continue</button>
+        <button id="btn-step1-next" data-i18n="continueBtn">Continue</button>
       </div>
     </div>
   </div>
@@ -493,27 +528,27 @@
   <div class="screen" id="screen-2">
     <div class="card">
       <p class="eyebrow" id="step2-eyebrow">Khata</p>
-      <h1>What do you offer, and where does the ledger start?</h1>
+      <h1 data-i18n="step2Heading">What do you offer, and where does the ledger start?</h1>
 
       <div class="step-field">
-        <label class="field-label">Add a service</label>
+        <label class="field-label" data-i18n="addServiceLabel">Add a service</label>
         <div class="add-row">
           <div class="step-field" style="margin-bottom:0;">
-            <input type="text" id="input-service-name" placeholder="e.g. Home delivery, Tailoring, Consulting" autocomplete="off">
+            <input type="text" id="input-service-name" data-i18n-placeholder="servicePlaceholder" placeholder="e.g. Home delivery, Tailoring, Consulting" autocomplete="off">
           </div>
-          <button class="ghost small" id="btn-add-service">Add</button>
+          <button class="ghost small" id="btn-add-service" data-i18n="addBtn">Add</button>
         </div>
         <div class="chip-row" id="service-chips"></div>
       </div>
 
       <div class="step-field" style="margin-top:2rem;">
-        <label class="field-label">Opening balance (Rs)</label>
+        <label class="field-label" data-i18n="openingBalanceLabel">Opening balance (Rs)</label>
         <input type="number" id="input-opening-balance" placeholder="0" min="0" step="1">
       </div>
 
       <div class="card-actions">
-        <button class="ghost" id="btn-step2-back" style="margin-right:0.7rem;">Back</button>
-        <button id="btn-step2-next">Start my ledger</button>
+        <button class="ghost" id="btn-step2-back" data-i18n="backBtn" style="margin-right:0.7rem;">Back</button>
+        <button id="btn-step2-next" data-i18n="startLedgerBtn">Start my ledger</button>
       </div>
     </div>
   </div>
@@ -523,16 +558,17 @@
     <header class="top">
       <h1 id="dash-business-name">Business</h1>
       <div style="display:flex; align-items:center; gap:0.9rem;">
-        <span class="tag">Khata</span>
+        <span class="tag" id="dash-user-email"></span>
+        <span class="tag" data-i18n="appTag">Khata</span>
         <button class="print-btn" id="btn-print" type="button">
-          <span class="icon">🖨️</span><span>Print</span>
+          <span class="icon">🖨️</span><span data-i18n="printBtn">Print</span>
         </button>
       </div>
     </header>
 
     <div class="print-only" id="print-header">
       <div>
-        <p class="print-kicker">Ledger statement</p>
+        <p class="print-kicker" data-i18n="printLedgerStatement">Ledger statement</p>
         <h1 id="print-business-name">Business</h1>
       </div>
       <div class="print-meta">
@@ -542,19 +578,19 @@
 
     <div class="summary">
       <div class="stat">
-        <span class="field-label">Opening balance</span>
+        <span class="field-label" data-i18n="openingBalanceStat">Opening balance</span>
         <div class="num" id="stat-opening">Rs 0</div>
       </div>
       <div class="stat income">
-        <span class="field-label">Income</span>
+        <span class="field-label" data-i18n="incomeStat">Income</span>
         <div class="num" id="stat-income">Rs 0</div>
       </div>
       <div class="stat expense">
-        <span class="field-label">Expenses</span>
+        <span class="field-label" data-i18n="expensesStat">Expenses</span>
         <div class="num" id="stat-expense">Rs 0</div>
       </div>
       <div class="stat closing">
-        <span class="field-label">Closing balance</span>
+        <span class="field-label" data-i18n="closingBalanceStat">Closing balance</span>
         <div class="num" id="stat-closing">Rs 0</div>
       </div>
     </div>
@@ -562,32 +598,32 @@
     <div class="panels-grid">
       <!-- SERVICES -->
       <section id="panel-services">
-        <h2 class="panel-title">Services</h2>
+        <h2 class="panel-title" data-i18n="servicesTitle">Services</h2>
         <div class="services-grid" id="services-grid"></div>
 
         <div class="add-service-row">
-          <input type="text" id="input-new-service" placeholder="Add another service">
-          <button class="ghost small" id="btn-new-service">Add service</button>
+          <input type="text" id="input-new-service" data-i18n-placeholder="addAnotherServicePlaceholder" placeholder="Add another service">
+          <button class="ghost small" id="btn-new-service" data-i18n="addServiceBtn">Add service</button>
         </div>
       </section>
 
       <!-- EXPENSES -->
       <section id="panel-expenses">
-        <h2 class="panel-title">Expenses</h2>
+        <h2 class="panel-title" data-i18n="expensesTitle">Expenses</h2>
         <div class="service-card">
           <div class="service-head">
-            <h2>Log an expense</h2>
+            <h2 data-i18n="logExpenseTitle">Log an expense</h2>
           </div>
           <div class="entry-form">
             <div class="step-field">
-              <label class="field-label">What was it for</label>
-              <input type="text" id="input-expense-desc" placeholder="e.g. Fuel, Raw material, Rent">
+              <label class="field-label" data-i18n="expenseDescLabel">What was it for</label>
+              <input type="text" id="input-expense-desc" data-i18n-placeholder="expenseDescPlaceholder" placeholder="e.g. Fuel, Raw material, Rent">
             </div>
             <div class="step-field amt">
-              <label class="field-label">Amount (Rs)</label>
+              <label class="field-label" data-i18n="expenseAmountLabel">Amount (Rs)</label>
               <input type="number" id="input-expense-amount" placeholder="0" min="0" step="1">
             </div>
-            <button class="small" id="btn-add-expense">Add expense</button>
+            <button class="small" id="btn-add-expense" data-i18n="addExpenseBtn">Add expense</button>
           </div>
         </div>
         <div id="expense-list"></div>
@@ -597,18 +633,18 @@
     <!-- RECORD SHEET -->
     <section class="panel-sheet-wrap">
       <div class="sheet-head">
-        <h2 class="panel-title">Record sheet</h2>
-        <button class="ghost small danger" id="btn-clear-all" type="button">Clear all</button>
+        <h2 class="panel-title" data-i18n="recordSheetTitle">Record sheet</h2>
+        <button class="ghost small danger" id="btn-clear-all" data-i18n="clearAllBtn" type="button">Clear all</button>
       </div>
       <div class="sheet" id="sheet-container">
         <table>
           <thead>
             <tr>
-              <th class="srno-col">Sr. No</th>
-              <th>Date</th>
-              <th>Description</th>
-              <th class="num">Amount</th>
-              <th class="num">Balance</th>
+              <th class="srno-col" data-i18n="srNo">Sr. No</th>
+              <th data-i18n="date">Date</th>
+              <th data-i18n="description">Description</th>
+              <th class="num" data-i18n="amount">Amount</th>
+              <th class="num" data-i18n="balance">Balance</th>
               <th></th>
             </tr>
           </thead>
@@ -620,23 +656,154 @@
 
   <div class="print-only print-footer">
     <div class="footer-row">
-      <span class="footer-name">Khata</span>
-      <span class="footer-tag">For any kind of software, contact us at +92 305 4445578</span>
+      <span class="footer-name" data-i18n="appTag">Khata</span>
+      <span class="footer-tag" data-i18n="footerTag">For any kind of software, contact us at +92 305 4445578</span>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Recorded</span></div>
 
+<!-- ===================== Firebase ===================== -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script>
+  // TODO: replace with YOUR project's config from
+  // Firebase Console → Project settings → General → Your apps → SDK setup and configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAAGoZJpIOfq3oogogphSwmj14BVc_H-4Y",
+  authDomain: "ledger-323e0.firebaseapp.com",
+  projectId: "ledger-323e0",
+  storageBucket: "ledger-323e0.firebasestorage.app",
+  messagingSenderId: "3717505473",
+  appId: "1:3717505473:web:51db4f707ff98151b14f40",
+  measurementId: "G-XBJRS3V0PG"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+</script>
+
 <script>
 (function(){
   const STORAGE_SETUP = 'khata:setup';
   const STORAGE_RECORDS = 'khata:records';
   const STORAGE_THEME = 'khata:theme';
+  const STORAGE_LANG = 'khata:lang';
 
   let setup = null;          // { businessName, services: [{id,name}], openingBalance }
   let records = [];          // [{id,type,date,description,amount}]
   let pendingServices = [];  // used only during onboarding step 2
+  let currentLang = 'en';
+  let currentUser = null;    // Firebase auth user, or null when signed out
+  let authMode = 'signin';   // 'signin' | 'signup'
+
+  const TRANSLATIONS = {
+    en: {
+      appTag: 'Khata',
+      step1Heading: "Let's set up your ledger. What's your business called?",
+      businessNameLabel: 'Business name',
+      businessNamePlaceholder: 'e.g. Al-Karam Traders',
+      continueBtn: 'Continue',
+      step2Heading: 'What do you offer, and where does the ledger start?',
+      addServiceLabel: 'Add a service',
+      servicePlaceholder: 'e.g. Home delivery, Tailoring, Consulting',
+      addBtn: 'Add',
+      openingBalanceLabel: 'Opening balance (Rs)',
+      backBtn: 'Back',
+      startLedgerBtn: 'Start my ledger',
+      openingBalanceStat: 'Opening balance',
+      incomeStat: 'Income',
+      expensesStat: 'Expenses',
+      closingBalanceStat: 'Closing balance',
+      servicesTitle: 'Services',
+      expensesTitle: 'Expenses',
+      recordSheetTitle: 'Record sheet',
+      clearAllBtn: 'Clear all',
+      clearAllConfirm: 'Click again to confirm',
+      addAnotherServicePlaceholder: 'Add another service',
+      addServiceBtn: 'Add service',
+      totalLabel: 'Total',
+      addEntryBtn: 'Add',
+      logExpenseTitle: 'Log an expense',
+      expenseDescLabel: 'What was it for',
+      expenseDescPlaceholder: 'e.g. Fuel, Raw material, Rent',
+      expenseAmountLabel: 'Amount (Rs)',
+      addExpenseBtn: 'Add expense',
+      noExpenses: 'No expenses logged yet.',
+      showingRecent: (n) => `Showing the ${n} most recent — full history is in the record sheet.`,
+      noServices: 'No services yet. Add one below.',
+      noEntries: 'No entries yet. Add a service payment or an expense to start your record sheet.',
+      srNo: 'Sr. No',
+      date: 'Date',
+      description: 'Description',
+      amount: 'Amount',
+      balance: 'Balance',
+      printBtn: 'Print',
+      printLedgerStatement: 'Ledger statement',
+      footerTag: 'For any kind of software, contact us at +92 305 4445578',
+      recordedIncome: 'Income recorded',
+      recordedExpense: 'Expense recorded',
+      loading: 'Opening the ledger…'
+    },
+    ur: {
+      appTag: 'کھاتہ',
+      step1Heading: 'اپنا کھاتہ بنائیں۔ آپ کے کاروبار کا نام کیا ہے؟',
+      businessNameLabel: 'کاروبار کا نام',
+      businessNamePlaceholder: 'مثلاً الکرم ٹریڈرز',
+      continueBtn: 'جاری رکھیں',
+      step2Heading: 'آپ کیا خدمات فراہم کرتے ہیں، اور کھاتہ کہاں سے شروع ہوگا؟',
+      addServiceLabel: 'سروس شامل کریں',
+      servicePlaceholder: 'مثلاً ہوم ڈیلیوری، سلائی، مشاورت',
+      addBtn: 'شامل کریں',
+      openingBalanceLabel: 'ابتدائی بیلنس (روپے)',
+      backBtn: 'واپس',
+      startLedgerBtn: 'کھاتہ شروع کریں',
+      openingBalanceStat: 'ابتدائی بیلنس',
+      incomeStat: 'آمدنی',
+      expensesStat: 'اخراجات',
+      closingBalanceStat: 'اختتامی بیلنس',
+      servicesTitle: 'سروسز',
+      expensesTitle: 'اخراجات',
+      recordSheetTitle: 'ریکارڈ شیٹ',
+      clearAllBtn: 'سب صاف کریں',
+      clearAllConfirm: 'تصدیق کے لیے دوبارہ دبائیں',
+      addAnotherServicePlaceholder: 'مزید سروس شامل کریں',
+      addServiceBtn: 'سروس شامل کریں',
+      totalLabel: 'کل',
+      addEntryBtn: 'شامل کریں',
+      logExpenseTitle: 'خرچہ درج کریں',
+      expenseDescLabel: 'یہ کس کے لیے تھا',
+      expenseDescPlaceholder: 'مثلاً ایندھن، خام مال، کرایہ',
+      expenseAmountLabel: 'رقم (روپے)',
+      addExpenseBtn: 'خرچہ شامل کریں',
+      noExpenses: 'ابھی تک کوئی خرچہ درج نہیں ہوا۔',
+      showingRecent: (n) => `تازہ ترین ${n} دکھائے جا رہے ہیں — مکمل ریکارڈ ریکارڈ شیٹ میں ہے۔`,
+      noServices: 'ابھی تک کوئی سروس نہیں۔ نیچے ایک شامل کریں۔',
+      noEntries: 'ابھی تک کوئی اندراج نہیں۔ ریکارڈ شیٹ شروع کرنے کے لیے سروس کی ادائیگی یا خرچہ شامل کریں۔',
+      srNo: 'نمبر شمار',
+      date: 'تاریخ',
+      description: 'تفصیل',
+      amount: 'رقم',
+      balance: 'بیلنس',
+      printBtn: 'پرنٹ',
+      printLedgerStatement: 'کھاتہ اسٹیٹمنٹ',
+      footerTag: 'کسی بھی قسم کے سافٹ ویئر کے لیے رابطہ کریں: 4445578 305 92+',
+      recordedIncome: 'آمدنی درج ہوگئی',
+      recordedExpense: 'خرچہ درج ہوگیا',
+      loading: 'کھاتہ کھولا جا رہا ہے…'
+    }
+  };
+
+  function t(key, ...args){
+    const entry = (TRANSLATIONS[currentLang] || TRANSLATIONS.en)[key];
+    if(typeof entry === 'function') return entry(...args);
+    return entry != null ? entry : key;
+  }
 
   const $ = (id) => document.getElementById(id);
 
@@ -652,15 +819,31 @@
     return new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
   }
 
+  // Theme/language are device-local prefs — plain localStorage, no auth needed.
+  function localGet(key){
+    try{ return localStorage.getItem(key); }catch(e){ return null; }
+  }
+  function localSet(key, value){
+    try{ localStorage.setItem(key, value); }catch(e){}
+  }
+
+  // Ledger data (setup + records) lives in Firestore, scoped to the signed-in user.
   async function storageGet(key){
+    if(!currentUser) return null;
     try{
-      const res = await window.storage.get(key, false);
-      return res ? JSON.parse(res.value) : null;
-    }catch(e){ return null; }
+      const snap = await db.collection('users').doc(currentUser.uid).get();
+      if(!snap.exists) return null;
+      const field = key.replace('khata:', '');
+      const data = snap.data();
+      return data[field] !== undefined ? data[field] : null;
+    }catch(e){ console.error('storage get failed', e); return null; }
   }
   async function storageSet(key, value){
-    try{ await window.storage.set(key, JSON.stringify(value), false); }
-    catch(e){ console.error('storage set failed', e); }
+    if(!currentUser) return;
+    const field = key.replace('khata:', '');
+    try{
+      await db.collection('users').doc(currentUser.uid).set({ [field]: value }, { merge:true });
+    }catch(e){ console.error('storage set failed', e); }
   }
 
   function showScreen(id){
@@ -775,7 +958,7 @@
     const grid = $('services-grid');
     grid.innerHTML = '';
     if(setup.services.length === 0){
-      grid.innerHTML = `<p class="empty-note">No services yet. Add one below.</p>`;
+      grid.innerHTML = `<p class="empty-note">${t('noServices')}</p>`;
       return;
     }
     setup.services.forEach(svc => {
@@ -788,10 +971,10 @@
         </div>
         <div class="svc-cell svc-input-cell">
           <input type="number" placeholder="0" min="0" step="1" data-role="amount">
-          <button class="small" data-role="add">Add</button>
+          <button class="small" data-role="add">${t('addEntryBtn')}</button>
         </div>
         <div class="svc-cell svc-total-cell">
-          <span class="lbl">Total</span>
+          <span class="lbl">${t('totalLabel')}</span>
           <span class="val">${fmt(serviceTotal(svc.id))}</span>
         </div>
       `;
@@ -840,11 +1023,11 @@
     const wrap = $('expense-list');
     const items = records.filter(r => r.type === 'expense');
     if(items.length === 0){
-      wrap.innerHTML = '<p class="empty-note">No expenses logged yet.</p>';
+      wrap.innerHTML = `<p class="empty-note">${t('noExpenses')}</p>`;
       return;
     }
     const count = Math.max(1, setup.services.length);
-    wrap.innerHTML = `<p class="empty-note" style="padding:0.4rem 0 0.8rem; font-size:0.85rem;">Showing the ${count} most recent — full history is in the record sheet.</p>`;
+    wrap.innerHTML = `<p class="empty-note" style="padding:0.4rem 0 0.8rem; font-size:0.85rem;">${t('showingRecent', count)}</p>`;
     items.slice(-count).reverse().forEach(r => {
       const row = document.createElement('div');
       row.className = 'service-card';
@@ -852,7 +1035,7 @@
       row.innerHTML = `
         <div class="service-head" style="margin-bottom:0;">
           <div>
-            <div style="font-family:'Fraunces',serif; font-weight:600;">${escapeHtml(r.description)}</div>
+            <div style="font-family:'Fraunces','Noto Nastaliq Urdu',serif; font-weight:600;">${escapeHtml(r.description)}</div>
             <div style="color:var(--muted); font-size:0.85rem;">${r.date}</div>
           </div>
           <span style="color:var(--coral); font-weight:600; font-family:'Space Grotesk', sans-serif;">${fmt(r.amount)}</span>
@@ -880,10 +1063,10 @@
     if(records.length === 0){
       clearBtn.dataset.confirming = 'false';
       clearBtn.classList.remove('danger-active');
-      clearBtn.textContent = 'Clear all';
+      clearBtn.textContent = t('clearAllBtn');
     }
     if(records.length === 0){
-      body.innerHTML = `<tr><td colspan="6"><p class="empty-note">No entries yet. Add a service payment or an expense to start your record sheet.</p></td></tr>`;
+      body.innerHTML = `<tr><td colspan="6"><p class="empty-note">${t('noEntries')}</p></td></tr>`;
       return;
     }
     let running = setup.openingBalance;
@@ -935,7 +1118,7 @@
 
   function showToast(record){
     const el = $('toast');
-    const label = record.type === 'income' ? 'Income recorded' : 'Expense recorded';
+    const label = record.type === 'income' ? t('recordedIncome') : t('recordedExpense');
     $('toast-text').textContent = `${label} · ${fmt(record.amount)}`;
     el.classList.remove('income', 'expense', 'show');
     el.classList.add(record.type);
@@ -959,7 +1142,7 @@
       clearTimeout(clearConfirmTimer);
       btn.dataset.confirming = 'false';
       btn.classList.remove('danger-active');
-      btn.textContent = 'Clear all';
+      btn.textContent = t('clearAllBtn');
       records = [];
       storageSet(STORAGE_RECORDS, records);
       renderServiceCards();
@@ -971,11 +1154,11 @@
 
     btn.dataset.confirming = 'true';
     btn.classList.add('danger-active');
-    btn.textContent = 'Click again to confirm';
+    btn.textContent = t('clearAllConfirm');
     clearConfirmTimer = setTimeout(() => {
       btn.dataset.confirming = 'false';
       btn.classList.remove('danger-active');
-      btn.textContent = 'Clear all';
+      btn.textContent = t('clearAllBtn');
     }, 3000);
   });
 
@@ -1006,24 +1189,138 @@
     const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     const next = current === 'light' ? 'dark' : 'light';
     applyTheme(next);
-    storageSet(STORAGE_THEME, next);
+    localSet(STORAGE_THEME, next);
+  });
+
+  // ---------- Language ----------
+  function applyLanguage(lang){
+    currentLang = (lang === 'ur') ? 'ur' : 'en';
+    document.documentElement.setAttribute('lang', currentLang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      el.textContent = t(el.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      el.placeholder = t(el.dataset.i18nPlaceholder);
+    });
+
+    $('lang-label').textContent = currentLang === 'ur' ? 'اردو' : 'English';
+
+    const clearBtn = $('btn-clear-all');
+    if(clearBtn){
+      clearBtn.dataset.confirming = 'false';
+      clearBtn.classList.remove('danger-active');
+    }
+
+    // Re-render dynamic sections so their generated text is re-translated
+    if(setup){
+      renderServiceCards();
+      renderExpenseList();
+      renderSheet();
+    }
+  }
+  $('lang-toggle').addEventListener('click', () => {
+    const next = currentLang === 'ur' ? 'en' : 'ur';
+    applyLanguage(next);
+    localSet(STORAGE_LANG, next);
+  });
+
+  // ---------- Auth ----------
+  function authErrorMessage(e){
+    const code = (e && e.code) || '';
+    switch(code){
+      case 'auth/email-already-in-use': return 'That email is already registered — try signing in instead.';
+      case 'auth/invalid-email': return 'That email address looks invalid.';
+      case 'auth/weak-password': return 'Password should be at least 6 characters.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential': return 'Incorrect email or password.';
+      case 'auth/too-many-requests': return 'Too many attempts — please wait a moment and try again.';
+      default: return 'Something went wrong. Please try again.';
+    }
+  }
+  function setAuthMessage(text, isError){
+    const el = $('auth-error');
+    el.textContent = text;
+    el.style.color = isError ? 'var(--coral)' : 'var(--emerald)';
+    el.style.display = text ? 'block' : 'none';
+  }
+  function setAuthMode(mode){
+    authMode = mode;
+    $('auth-heading').textContent = mode === 'signin' ? 'Sign in to your ledger' : 'Create your ledger account';
+    $('btn-auth-submit').textContent = mode === 'signin' ? 'Sign in' : 'Sign up';
+    $('btn-auth-toggle').textContent = mode === 'signin' ? 'Need an account? Sign up' : 'Already have an account? Sign in';
+    setAuthMessage('', false);
+  }
+  $('btn-auth-toggle').addEventListener('click', () => setAuthMode(authMode === 'signin' ? 'signup' : 'signin'));
+
+  $('btn-auth-submit').addEventListener('click', async () => {
+    const email = $('input-auth-email').value.trim();
+    const password = $('input-auth-password').value;
+    if(!email || !password){ setAuthMessage('Enter an email and password.', true); return; }
+    const btn = $('btn-auth-submit');
+    btn.disabled = true;
+    setAuthMessage('', false);
+    try{
+      if(authMode === 'signin'){
+        await auth.signInWithEmailAndPassword(email, password);
+      }else{
+        await auth.createUserWithEmailAndPassword(email, password);
+      }
+      $('input-auth-password').value = '';
+    }catch(e){
+      setAuthMessage(authErrorMessage(e), true);
+    }finally{
+      btn.disabled = false;
+    }
+  });
+  $('input-auth-password').addEventListener('keydown', e => { if(e.key === 'Enter') $('btn-auth-submit').click(); });
+
+  $('btn-forgot-password').addEventListener('click', async () => {
+    const email = $('input-auth-email').value.trim();
+    if(!email){ setAuthMessage('Enter your email above first.', true); return; }
+    try{
+      await auth.sendPasswordResetEmail(email);
+      setAuthMessage('Password reset email sent — check your inbox.', false);
+    }catch(e){
+      setAuthMessage(authErrorMessage(e), true);
+    }
+  });
+
+  $('btn-logout').addEventListener('click', async () => {
+    try{ await auth.signOut(); }
+    catch(e){ console.error('sign out failed', e); }
   });
 
   // ---------- Boot ----------
-  async function boot(){
-    const savedTheme = await storageGet(STORAGE_THEME);
-    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
-    const savedSetup = await storageGet(STORAGE_SETUP);
+  // Theme/language apply immediately — they don't depend on being signed in.
+  applyTheme(localGet(STORAGE_THEME) === 'light' ? 'light' : 'dark');
+  applyLanguage(localGet(STORAGE_LANG) === 'ur' ? 'ur' : 'en');
+
+  auth.onAuthStateChanged(async (user) => {
+    currentUser = user;
     $('loading').style.display = 'none';
-    if(savedSetup && savedSetup.businessName && savedSetup.services && savedSetup.services.length){
-      setup = savedSetup;
-      records = (await storageGet(STORAGE_RECORDS)) || [];
-      enterDashboard();
+
+    if(user){
+      $('btn-logout').style.display = '';
+      $('dash-user-email').textContent = user.email || '';
+      const savedSetup = await storageGet(STORAGE_SETUP);
+      if(savedSetup && savedSetup.businessName && savedSetup.services && savedSetup.services.length){
+        setup = savedSetup;
+        records = (await storageGet(STORAGE_RECORDS)) || [];
+        enterDashboard();
+      }else{
+        setup = null;
+        records = [];
+        showScreen('screen-1');
+      }
     }else{
-      showScreen('screen-1');
+      $('btn-logout').style.display = 'none';
+      setup = null;
+      records = [];
+      showScreen('screen-auth');
     }
-  }
-  boot();
+  });
 })();
 </script>
 </body>
