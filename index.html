@@ -64,7 +64,7 @@
     color:var(--text);
     font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
     min-height:100vh;
-    padding:2.5rem 1.25rem 5rem;
+    padding:6.5rem 1.25rem 5rem;
     transition:background-color 0.3s ease, color 0.3s ease;
   }
   .wrap{ max-width:1040px; margin:0 auto; }
@@ -210,6 +210,7 @@
     display:inline-block;
   }
   @media (max-width: 640px){ .summary{ grid-template-columns:1fr 1fr; } }
+  @media (max-width: 560px){ body{ padding-top:9.5rem; } }
 
   .panels-grid{
     display:grid;
@@ -471,6 +472,9 @@
 </head>
 <body>
 <div class="top-controls">
+  <div class="theme-toggle" id="live-clock" style="cursor:default;" title="Current date and time">
+    <span class="icon">🕐</span><span id="clock-text">—</span>
+  </div>
   <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
     <span class="icon" id="theme-icon">🌙</span><span id="theme-label">Dark</span>
   </button>
@@ -669,23 +673,19 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <script>
-  // TODO: replace with YOUR project's config from
   // Firebase Console → Project settings → General → Your apps → SDK setup and configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAAGoZJpIOfq3oogogphSwmj14BVc_H-4Y",
-  authDomain: "ledger-323e0.firebaseapp.com",
-  projectId: "ledger-323e0",
-  storageBucket: "ledger-323e0.firebasestorage.app",
-  messagingSenderId: "3717505473",
-  appId: "1:3717505473:web:51db4f707ff98151b14f40",
-  measurementId: "G-XBJRS3V0PG"
-};
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
+  const firebaseConfig = {
+    apiKey: "AIzaSyAAGoZJpIOfq3oogogphSwmj14BVc_H-4Y",
+    authDomain: "ledger-323e0.firebaseapp.com",
+    projectId: "ledger-323e0",
+    storageBucket: "ledger-323e0.firebasestorage.app",
+    messagingSenderId: "3717505473",
+    appId: "1:3717505473:web:51db4f707ff98151b14f40",
+    measurementId: "G-XBJRS3V0PG"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 </script>
 
 <script>
@@ -1291,6 +1291,17 @@ const db = firebase.firestore();
     try{ await auth.signOut(); }
     catch(e){ console.error('sign out failed', e); }
   });
+
+  // ---------- Live clock ----------
+  function updateClock(){
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const el = $('clock-text');
+    if(el) el.textContent = `${dateStr} · ${timeStr}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 
   // ---------- Boot ----------
   // Theme/language apply immediately — they don't depend on being signed in.
