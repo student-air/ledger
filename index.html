@@ -384,6 +384,122 @@
     100%{ transform:scale(1); }
   }
 
+  /* Hamburger / menu button */
+  .menu-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:42px; height:42px;
+    background:var(--surface); border:1px solid var(--line);
+    color:var(--text); border-radius:10px;
+    box-shadow:var(--shadow); padding:0; font-size:1.25rem;
+  }
+  .menu-btn:hover{ border-color:var(--gold); background:var(--gold-soft); box-shadow:var(--shadow); transform:none; }
+
+  /* ---------- Side Drawer ---------- */
+  .drawer-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.45);
+    z-index:70; opacity:0; visibility:hidden;
+    transition:opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .drawer-overlay.open{ opacity:1; visibility:visible; }
+  .drawer{
+    position:fixed; top:0; left:0; bottom:0; width:min(340px, 88vw);
+    background:var(--surface); border-right:1px solid var(--line);
+    z-index:80; transform:translateX(-105%);
+    transition:transform 0.32s cubic-bezier(.16,1,.3,1), background-color 0.3s ease;
+    display:flex; flex-direction:column;
+    box-shadow:8px 0 30px -12px rgba(0,0,0,0.4);
+  }
+  .drawer.open{ transform:translateX(0); }
+  .drawer-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.3rem 1.25rem 1rem; border-bottom:1px solid var(--line);
+  }
+  .drawer-header h2{ margin:0; font-size:1.25rem; font-weight:600; }
+  .drawer-close{
+    background:transparent; border:none; color:var(--muted); font-size:1.4rem;
+    padding:0.2rem 0.5rem; border-radius:6px; line-height:1;
+  }
+  .drawer-close:hover{ color:var(--text); background:var(--gold-soft); box-shadow:none; transform:none; }
+  .drawer-body{ flex:1; overflow-y:auto; padding:0.8rem 0 1.5rem; }
+  .drawer-item{
+    display:flex; align-items:center; gap:0.85rem;
+    width:100%; padding:0.85rem 1.25rem;
+    background:transparent; border:none; color:var(--text);
+    font-size:0.95rem; font-weight:500; text-align:left;
+    border-radius:0; transition:background 0.15s ease;
+  }
+  .drawer-item:hover{ background:var(--gold-soft); box-shadow:none; transform:none; }
+  .drawer-item .d-icon{ font-size:1.15rem; width:1.4rem; text-align:center; flex:none; }
+  .drawer-item .d-label{ flex:1; }
+  .drawer-item .d-value{ color:var(--muted); font-size:0.85rem; font-weight:500; }
+  .drawer-section-title{
+    font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); padding:1.1rem 1.25rem 0.4rem;
+  }
+  .drawer-divider{ height:1px; background:var(--line); margin:0.6rem 1.25rem; }
+
+  /* Settings panel inside drawer */
+  .settings-panel{ display:none; padding:0 1.25rem 1rem; }
+  .settings-panel.open{ display:block; animation:riseIn 0.25s ease both; }
+  .settings-panel .step-field{ margin-bottom:1.2rem; }
+  .settings-panel .svc-manage-list{ margin:0.5rem 0 0.8rem; }
+  .settings-panel .svc-manage-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0.5rem 0; border-bottom:1px solid var(--line); gap:0.5rem;
+  }
+  .settings-panel .svc-manage-row span{ font-size:0.92rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  /* History list */
+  .history-panel{ display:none; padding:0 1rem 1rem; }
+  .history-panel.open{ display:block; animation:riseIn 0.25s ease both; }
+  .history-card{
+    background:var(--surface-2); border:1px solid var(--line);
+    border-radius:10px; padding:0.9rem 1rem; margin-bottom:0.65rem;
+    cursor:pointer; transition:border-color 0.2s ease, transform 0.15s ease;
+  }
+  .history-card:hover{ border-color:var(--gold); transform:translateY(-1px); }
+  .history-card .hc-date{ font-size:0.82rem; color:var(--muted); margin-bottom:0.25rem; }
+  .history-card .hc-title{ font-weight:600; font-size:0.95rem; margin-bottom:0.35rem; }
+  .history-card .hc-stats{ display:flex; gap:0.8rem; flex-wrap:wrap; font-size:0.8rem; color:var(--muted); }
+  .history-card .hc-stats span strong{ color:var(--text); font-weight:600; }
+
+  /* Modal for history view / new ledger */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.5);
+    z-index:90; display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; transition:opacity 0.25s ease, visibility 0.25s ease;
+    padding:1rem;
+  }
+  .modal-overlay.open{ opacity:1; visibility:visible; }
+  .modal{
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:14px; width:min(560px, 100%); max-height:90vh;
+    overflow-y:auto; box-shadow:var(--shadow);
+    animation:riseIn 0.3s cubic-bezier(.16,1,.3,1) both;
+  }
+  .modal-header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.2rem 1.4rem; border-bottom:1px solid var(--line);
+  }
+  .modal-header h2{ margin:0; font-size:1.2rem; }
+  .modal-body{ padding:1.3rem 1.4rem; }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:0.7rem; padding:0 1.4rem 1.3rem; flex-wrap:wrap; }
+
+  /* History detail view inside modal */
+  .hist-summary{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-bottom:1.2rem;
+  }
+  .hist-stat{
+    background:var(--surface-2); border-radius:8px; padding:0.7rem 0.9rem;
+    border-left:3px solid var(--line);
+  }
+  .hist-stat.income{ border-left-color:var(--emerald); }
+  .hist-stat.expense{ border-left-color:var(--coral); }
+  .hist-stat.closing{ border-left-color:var(--gold); }
+  .hist-stat .lbl{ font-size:0.75rem; color:var(--muted); margin-bottom:0.2rem; }
+  .hist-stat .val{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:1.05rem; }
+  .hist-sheet{ max-height:280px; overflow-y:auto; background:var(--paper); color:var(--ink); border-radius:8px; padding:0.4rem 0.8rem; }
+
   .print-only{ display:none; }
   .print-footer{ display:none; }
 
@@ -392,7 +508,8 @@
   }
 
   @media print{
-    .top-controls, .print-btn, .toast, #loading, .panels-grid, #btn-clear-all{ display:none !important; }
+    .top-controls, .print-btn, .toast, #loading, .panels-grid, #btn-clear-all,
+    .drawer, .drawer-overlay, .modal-overlay, .menu-btn, #btn-new-ledger-plus{ display:none !important; }
     html, body{
       background:#ffffff !important; color:#171b22 !important;
       padding:0; font-family:'Inter', 'Noto Nastaliq Urdu', sans-serif;
@@ -467,23 +584,20 @@
     }
     .print-footer .footer-name{ font-weight:700; letter-spacing:0.02em; color:#171b22; font-family:'Fraunces', 'Noto Nastaliq Urdu', serif; }
     .print-footer .footer-tag{ color:#5a5f6c; font-size:0.76rem; }
+
+    /* When printing a history snapshot from modal */
+    body.printing-history .wrap > *:not(#history-print-area){ display:none !important; }
+    body.printing-history #history-print-area{ display:block !important; }
+    #history-print-area{ display:none; }
   }
 </style>
 </head>
 <body>
 <div class="top-controls">
+  <button class="menu-btn" id="btn-menu" type="button" aria-label="Open menu" title="Menu">☰</button>
   <div class="theme-toggle" id="live-clock" style="cursor:default;" title="Current date and time">
     <span class="icon">🕐</span><span id="clock-text">—</span>
   </div>
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
-    <span class="icon" id="theme-icon">🌙</span><span id="theme-label">Dark</span>
-  </button>
-  <button class="theme-toggle" id="lang-toggle" type="button" aria-label="Toggle Urdu and English">
-    <span class="icon">🌐</span><span id="lang-label">English</span>
-  </button>
-  <button class="theme-toggle" id="btn-logout" type="button" style="display:none;">
-    <span class="icon">🚪</span><span>Sign out</span>
-  </button>
 </div>
 <div class="wrap">
 
@@ -561,9 +675,12 @@
   <div class="screen" id="screen-dashboard">
     <header class="top">
       <h1 id="dash-business-name">Business</h1>
-      <div style="display:flex; align-items:center; gap:0.9rem;">
+      <div style="display:flex; align-items:center; gap:0.7rem; flex-wrap:wrap;">
         <span class="tag" id="dash-user-email"></span>
         <span class="tag" data-i18n="appTag">Khata</span>
+        <button class="print-btn" id="btn-new-ledger-plus" type="button" title="Start new ledger">
+          <span class="icon">＋</span><span data-i18n="newLedgerBtn">New</span>
+        </button>
         <button class="print-btn" id="btn-print" type="button">
           <span class="icon">🖨️</span><span data-i18n="printBtn">Print</span>
         </button>
@@ -664,6 +781,119 @@
       <span class="footer-tag" data-i18n="footerTag">For any kind of software, contact us at +92 305 4445578</span>
     </div>
   </div>
+
+  <!-- Hidden area used only when printing a history snapshot -->
+  <div id="history-print-area"></div>
+</div>
+
+<!-- ========== SIDE DRAWER ========== -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-label="Menu">
+  <div class="drawer-header">
+    <h2 data-i18n="menuTitle">Menu</h2>
+    <button class="drawer-close" id="btn-drawer-close" type="button" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-body">
+    <p class="drawer-section-title" data-i18n="sectionPreferences">Preferences</p>
+    <button class="drawer-item" id="drawer-theme" type="button">
+      <span class="d-icon" id="drawer-theme-icon">🌙</span>
+      <span class="d-label" data-i18n="darkMode">Dark mode</span>
+      <span class="d-value" id="drawer-theme-value">On</span>
+    </button>
+    <button class="drawer-item" id="drawer-lang" type="button">
+      <span class="d-icon">🌐</span>
+      <span class="d-label" data-i18n="language">Language</span>
+      <span class="d-value" id="drawer-lang-value">English</span>
+    </button>
+
+    <div class="drawer-divider"></div>
+    <p class="drawer-section-title" data-i18n="sectionSettings">Settings</p>
+    <button class="drawer-item" id="drawer-settings" type="button">
+      <span class="d-icon">⚙️</span>
+      <span class="d-label" data-i18n="settings">Settings</span>
+    </button>
+    <div class="settings-panel" id="settings-panel">
+      <div class="step-field">
+        <label class="field-label" data-i18n="businessNameLabel">Business name</label>
+        <input type="text" id="settings-business-name" autocomplete="off">
+      </div>
+      <div class="step-field">
+        <label class="field-label" data-i18n="manageServicesLabel">Manage services</label>
+        <div class="svc-manage-list" id="settings-services-list"></div>
+        <div class="add-row" style="margin-top:0.4rem;">
+          <div class="step-field" style="margin-bottom:0; flex:1;">
+            <input type="text" id="settings-new-service" data-i18n-placeholder="addAnotherServicePlaceholder" placeholder="Add another service">
+          </div>
+          <button class="ghost small" id="settings-add-service" data-i18n="addBtn" type="button">Add</button>
+        </div>
+      </div>
+      <div class="step-field">
+        <label class="field-label" data-i18n="openingBalanceLabel">Opening balance (Rs)</label>
+        <input type="number" id="settings-opening-balance" min="0" step="1" placeholder="0">
+        <p style="font-size:0.78rem; color:var(--muted); margin:0.4rem 0 0;" data-i18n="openingBalanceHint">Changing this only updates the current period’s opening balance.</p>
+      </div>
+      <button class="small" id="settings-save" data-i18n="saveSettingsBtn" type="button" style="width:100%; margin-bottom:0.6rem;">Save changes</button>
+      <button class="ghost small" id="settings-start-new" data-i18n="startNewLedgerBtn" type="button" style="width:100%;">Start new ledger</button>
+    </div>
+
+    <div class="drawer-divider"></div>
+    <p class="drawer-section-title" data-i18n="sectionHistory">History</p>
+    <button class="drawer-item" id="drawer-history" type="button">
+      <span class="d-icon">📜</span>
+      <span class="d-label" data-i18n="history">History</span>
+      <span class="d-value" id="drawer-history-count">0</span>
+    </button>
+    <div class="history-panel" id="history-panel">
+      <div id="history-list"></div>
+      <p class="empty-note" id="history-empty" style="display:none; padding:0.8rem 0.3rem;" data-i18n="noHistory">No archived ledgers yet. Start a new ledger to archive the current one.</p>
+    </div>
+
+    <div class="drawer-divider"></div>
+    <button class="drawer-item" id="drawer-logout" type="button">
+      <span class="d-icon">🚪</span>
+      <span class="d-label" data-i18n="signOut">Sign out</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ========== NEW LEDGER MODAL ========== -->
+<div class="modal-overlay" id="modal-new-ledger">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 data-i18n="startNewLedgerTitle">Start new ledger</h2>
+      <button class="icon-x" id="modal-new-ledger-close" type="button" style="font-size:1.3rem;">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin:0 0 1.2rem; color:var(--muted); font-size:0.92rem;" data-i18n="startNewLedgerDesc">
+        The current period will be archived (last 7 kept). Business name and services stay the same. Enter the new opening balance.
+      </p>
+      <div class="step-field">
+        <label class="field-label" data-i18n="newOpeningBalanceLabel">New opening balance (Rs)</label>
+        <input type="number" id="input-new-opening" placeholder="0" min="0" step="1">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" id="modal-new-ledger-cancel" data-i18n="cancelBtn" type="button">Cancel</button>
+      <button id="modal-new-ledger-confirm" data-i18n="confirmNewLedgerBtn" type="button">Archive &amp; start new</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HISTORY VIEW MODAL ========== -->
+<div class="modal-overlay" id="modal-history-view">
+  <div class="modal" style="width:min(640px, 100%);">
+    <div class="modal-header">
+      <h2 id="hist-view-title">Archived ledger</h2>
+      <button class="icon-x" id="modal-history-close" type="button" style="font-size:1.3rem;">×</button>
+    </div>
+    <div class="modal-body" id="hist-view-body">
+      <!-- filled dynamically -->
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" id="modal-history-close2" data-i18n="closeBtn" type="button">Close</button>
+      <button id="modal-history-print" data-i18n="printBtn" type="button">Print</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Recorded</span></div>
@@ -692,15 +922,19 @@
 (function(){
   const STORAGE_SETUP = 'khata:setup';
   const STORAGE_RECORDS = 'khata:records';
+  const STORAGE_HISTORY = 'khata:history';
   const STORAGE_THEME = 'khata:theme';
   const STORAGE_LANG = 'khata:lang';
+  const MAX_HISTORY = 7;
 
   let setup = null;          // { businessName, services: [{id,name}], openingBalance }
-  let records = [];          // [{id,type,date,description,amount}]
+  let records = [];          // [{id,type,date,description,amount,serviceId?}]
+  let history = [];          // array of snapshots (max 7)
   let pendingServices = [];  // used only during onboarding step 2
   let currentLang = 'en';
-  let currentUser = null;    // Firebase auth user, or null when signed out
-  let authMode = 'signin';   // 'signin' | 'signup'
+  let currentUser = null;
+  let authMode = 'signin';
+  let viewingSnapshot = null; // currently open history snapshot for print
 
   const TRANSLATIONS = {
     en: {
@@ -748,7 +982,33 @@
       footerTag: 'For any kind of software, contact us at +92 305 4445578',
       recordedIncome: 'Income recorded',
       recordedExpense: 'Expense recorded',
-      loading: 'Opening the ledger…'
+      loading: 'Opening the ledger…',
+      menuTitle: 'Menu',
+      sectionPreferences: 'Preferences',
+      darkMode: 'Dark mode',
+      language: 'Language',
+      sectionSettings: 'Settings',
+      settings: 'Settings',
+      manageServicesLabel: 'Manage services',
+      openingBalanceHint: 'Changing this only updates the current period’s opening balance.',
+      saveSettingsBtn: 'Save changes',
+      startNewLedgerBtn: 'Start new ledger',
+      sectionHistory: 'History',
+      history: 'History',
+      noHistory: 'No archived ledgers yet. Start a new ledger to archive the current one.',
+      signOut: 'Sign out',
+      newLedgerBtn: 'New',
+      startNewLedgerTitle: 'Start new ledger',
+      startNewLedgerDesc: 'The current period will be archived (last 7 kept). Business name and services stay the same. Enter the new opening balance.',
+      newOpeningBalanceLabel: 'New opening balance (Rs)',
+      cancelBtn: 'Cancel',
+      confirmNewLedgerBtn: 'Archive & start new',
+      closeBtn: 'Close',
+      settingsSaved: 'Settings saved',
+      ledgerArchived: 'Ledger archived — new period started',
+      archivedOn: 'Archived on',
+      period: 'Period',
+      entries: 'entries'
     },
     ur: {
       appTag: 'کھاتہ',
@@ -795,7 +1055,33 @@
       footerTag: 'کسی بھی قسم کے سافٹ ویئر کے لیے رابطہ کریں: 4445578 305 92+',
       recordedIncome: 'آمدنی درج ہوگئی',
       recordedExpense: 'خرچہ درج ہوگیا',
-      loading: 'کھاتہ کھولا جا رہا ہے…'
+      loading: 'کھاتہ کھولا جا رہا ہے…',
+      menuTitle: 'مینو',
+      sectionPreferences: 'ترجیحات',
+      darkMode: 'ڈارک موڈ',
+      language: 'زبان',
+      sectionSettings: 'ترتیبات',
+      settings: 'ترتیبات',
+      manageServicesLabel: 'سروسز کا انتظام',
+      openingBalanceHint: 'یہ تبدیلی صرف موجودہ مدت کے ابتدائی بیلنس کو اپ ڈیٹ کرتی ہے۔',
+      saveSettingsBtn: 'تبدیلیاں محفوظ کریں',
+      startNewLedgerBtn: 'نیا کھاتہ شروع کریں',
+      sectionHistory: 'تاریخ',
+      history: 'تاریخ',
+      noHistory: 'ابھی تک کوئی محفوظ شدہ کھاتہ نہیں۔ نیا کھاتہ شروع کریں تاکہ موجودہ محفوظ ہو جائے۔',
+      signOut: 'سائن آؤٹ',
+      newLedgerBtn: 'نیا',
+      startNewLedgerTitle: 'نیا کھاتہ شروع کریں',
+      startNewLedgerDesc: 'موجودہ مدت محفوظ ہو جائے گی (آخری 7 رکھی جاتی ہیں)۔ کاروبار کا نام اور سروسز وہی رہیں گی۔ نیا ابتدائی بیلنس درج کریں۔',
+      newOpeningBalanceLabel: 'نیا ابتدائی بیلنس (روپے)',
+      cancelBtn: 'منسوخ',
+      confirmNewLedgerBtn: 'محفوظ کریں اور نیا شروع کریں',
+      closeBtn: 'بند کریں',
+      settingsSaved: 'ترتیبات محفوظ ہو گئیں',
+      ledgerArchived: 'کھاتہ محفوظ ہو گیا — نئی مدت شروع',
+      archivedOn: 'محفوظ کیا گیا',
+      period: 'مدت',
+      entries: 'اندراجات'
     }
   };
 
@@ -819,7 +1105,6 @@
     return new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
   }
 
-  // Theme/language are device-local prefs — plain localStorage, no auth needed.
   function localGet(key){
     try{ return localStorage.getItem(key); }catch(e){ return null; }
   }
@@ -827,7 +1112,6 @@
     try{ localStorage.setItem(key, value); }catch(e){}
   }
 
-  // Ledger data (setup + records) lives in Firestore, scoped to the signed-in user.
   async function storageGet(key){
     if(!currentUser) return null;
     try{
@@ -850,6 +1134,22 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(id).classList.add('active');
   }
+
+  // ---------- Drawer ----------
+  function openDrawer(){
+    $('drawer').classList.add('open');
+    $('drawer-overlay').classList.add('open');
+  }
+  function closeDrawer(){
+    $('drawer').classList.remove('open');
+    $('drawer-overlay').classList.remove('open');
+    // collapse sub-panels
+    $('settings-panel').classList.remove('open');
+    $('history-panel').classList.remove('open');
+  }
+  $('btn-menu').addEventListener('click', openDrawer);
+  $('btn-drawer-close').addEventListener('click', closeDrawer);
+  $('drawer-overlay').addEventListener('click', closeDrawer);
 
   // ---------- Onboarding: step 1 ----------
   $('btn-step1-next').addEventListener('click', () => {
@@ -900,8 +1200,10 @@
       openingBalance: opening
     };
     records = [];
+    history = [];
     await storageSet(STORAGE_SETUP, setup);
     await storageSet(STORAGE_RECORDS, records);
+    await storageSet(STORAGE_HISTORY, history);
     enterDashboard();
   });
 
@@ -914,6 +1216,7 @@
     renderExpenseList();
     renderSheet();
     renderSummary();
+    updateDrawerMeta();
     showScreen('screen-dashboard');
   }
 
@@ -1005,6 +1308,7 @@
     storageSet(STORAGE_SETUP, setup);
     renderServiceCards();
     renderExpenseList();
+    renderSettingsServices();
   }
 
   $('btn-new-service').addEventListener('click', () => {
@@ -1016,6 +1320,7 @@
     storageSet(STORAGE_SETUP, setup);
     renderServiceCards();
     renderExpenseList();
+    renderSettingsServices();
   });
   $('input-new-service').addEventListener('keydown', e => { if(e.key === 'Enter') $('btn-new-service').click(); });
 
@@ -1116,12 +1421,19 @@
     showToast(record);
   }
 
-  function showToast(record){
+  function showToast(recordOrMsg, type){
     const el = $('toast');
-    const label = record.type === 'income' ? t('recordedIncome') : t('recordedExpense');
-    $('toast-text').textContent = `${label} · ${fmt(record.amount)}`;
+    let label, toastType;
+    if(typeof recordOrMsg === 'string'){
+      label = recordOrMsg;
+      toastType = type || 'income';
+    }else{
+      label = (recordOrMsg.type === 'income' ? t('recordedIncome') : t('recordedExpense')) + ' · ' + fmt(recordOrMsg.amount);
+      toastType = recordOrMsg.type;
+    }
+    $('toast-text').textContent = label;
     el.classList.remove('income', 'expense', 'show');
-    el.classList.add(record.type);
+    el.classList.add(toastType);
     void el.offsetWidth;
     el.classList.add('show');
   }
@@ -1162,35 +1474,28 @@
     }, 3000);
   });
 
-  // ---------- Print ----------
+  // ---------- Print current ----------
   $('btn-print').addEventListener('click', () => {
     const btn = $('btn-print');
     btn.classList.add('printing');
     setTimeout(() => btn.classList.remove('printing'), 650);
-    try{
-      window.print();
-    }catch(e){
-      console.error('Print failed', e);
-    }
+    try{ window.print(); }catch(e){ console.error('Print failed', e); }
   });
 
   // ---------- Theme ----------
   function applyTheme(theme){
     document.documentElement.setAttribute('data-theme', theme);
-    const icon = $('theme-icon');
-    icon.style.transform = 'rotate(180deg)';
-    setTimeout(() => {
-      icon.textContent = theme === 'light' ? '☀️' : '🌙';
-      icon.style.transform = 'rotate(0deg)';
-    }, 200);
-    $('theme-label').textContent = theme === 'light' ? 'Light' : 'Dark';
+    const isLight = theme === 'light';
+    $('drawer-theme-icon').textContent = isLight ? '☀️' : '🌙';
+    $('drawer-theme-value').textContent = isLight ? 'Off' : 'On';
   }
-  $('theme-toggle').addEventListener('click', () => {
+  function toggleTheme(){
     const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     const next = current === 'light' ? 'dark' : 'light';
     applyTheme(next);
     localSet(STORAGE_THEME, next);
-  });
+  }
+  $('drawer-theme').addEventListener('click', toggleTheme);
 
   // ---------- Language ----------
   function applyLanguage(lang){
@@ -1204,7 +1509,7 @@
       el.placeholder = t(el.dataset.i18nPlaceholder);
     });
 
-    $('lang-label').textContent = currentLang === 'ur' ? 'اردو' : 'English';
+    $('drawer-lang-value').textContent = currentLang === 'ur' ? 'اردو' : 'English';
 
     const clearBtn = $('btn-clear-all');
     if(clearBtn){
@@ -1212,17 +1517,347 @@
       clearBtn.classList.remove('danger-active');
     }
 
-    // Re-render dynamic sections so their generated text is re-translated
     if(setup){
       renderServiceCards();
       renderExpenseList();
       renderSheet();
+      renderSettingsServices();
+      renderHistoryList();
     }
   }
-  $('lang-toggle').addEventListener('click', () => {
+  $('drawer-lang').addEventListener('click', () => {
     const next = currentLang === 'ur' ? 'en' : 'ur';
     applyLanguage(next);
     localSet(STORAGE_LANG, next);
+  });
+
+  // ---------- Settings panel ----------
+  $('drawer-settings').addEventListener('click', () => {
+    const panel = $('settings-panel');
+    const isOpen = panel.classList.contains('open');
+    $('history-panel').classList.remove('open');
+    if(isOpen){
+      panel.classList.remove('open');
+    }else{
+      if(setup){
+        $('settings-business-name').value = setup.businessName;
+        $('settings-opening-balance').value = setup.openingBalance;
+        renderSettingsServices();
+      }
+      panel.classList.add('open');
+    }
+  });
+
+  function renderSettingsServices(){
+    const list = $('settings-services-list');
+    if(!setup){ list.innerHTML = ''; return; }
+    list.innerHTML = '';
+    setup.services.forEach(svc => {
+      const row = document.createElement('div');
+      row.className = 'svc-manage-row';
+      row.innerHTML = `<span>${escapeHtml(svc.name)}</span>`;
+      const del = document.createElement('button');
+      del.className = 'icon-x';
+      del.textContent = '×';
+      del.addEventListener('click', () => deleteService(svc.id));
+      row.appendChild(del);
+      list.appendChild(row);
+    });
+  }
+
+  $('settings-add-service').addEventListener('click', () => {
+    const input = $('settings-new-service');
+    const v = input.value.trim();
+    if(!v || !setup) return;
+    setup.services.push({ id: uid(), name: v });
+    input.value = '';
+    storageSet(STORAGE_SETUP, setup);
+    renderServiceCards();
+    renderExpenseList();
+    renderSettingsServices();
+  });
+  $('settings-new-service').addEventListener('keydown', e => {
+    if(e.key === 'Enter'){ e.preventDefault(); $('settings-add-service').click(); }
+  });
+
+  $('settings-save').addEventListener('click', async () => {
+    if(!setup) return;
+    const name = $('settings-business-name').value.trim();
+    if(!name){ $('settings-business-name').focus(); return; }
+    const opening = Number($('settings-opening-balance').value);
+    setup.businessName = name;
+    setup.openingBalance = isNaN(opening) ? setup.openingBalance : opening;
+    await storageSet(STORAGE_SETUP, setup);
+    $('dash-business-name').textContent = setup.businessName;
+    $('print-business-name').textContent = setup.businessName;
+    renderSummary();
+    showToast(t('settingsSaved'), 'income');
+  });
+
+  // ---------- Start new ledger ----------
+  function openNewLedgerModal(){
+    closeDrawer();
+    $('input-new-opening').value = '';
+    $('modal-new-ledger').classList.add('open');
+    setTimeout(() => $('input-new-opening').focus(), 200);
+  }
+  function closeNewLedgerModal(){
+    $('modal-new-ledger').classList.remove('open');
+  }
+  $('btn-new-ledger-plus').addEventListener('click', openNewLedgerModal);
+  $('settings-start-new').addEventListener('click', openNewLedgerModal);
+  $('modal-new-ledger-close').addEventListener('click', closeNewLedgerModal);
+  $('modal-new-ledger-cancel').addEventListener('click', closeNewLedgerModal);
+  $('modal-new-ledger').addEventListener('click', e => {
+    if(e.target === $('modal-new-ledger')) closeNewLedgerModal();
+  });
+
+  $('modal-new-ledger-confirm').addEventListener('click', async () => {
+    if(!setup) return;
+    const newOpening = Number($('input-new-opening').value);
+    if(isNaN(newOpening) || newOpening < 0){
+      $('input-new-opening').focus();
+      return;
+    }
+
+    // Build snapshot of current period
+    const tot = totals();
+    let dateFrom = todayLabel();
+    let dateTo = todayLabel();
+    if(records.length > 0){
+      dateFrom = records[0].date;
+      dateTo = records[records.length - 1].date;
+    }
+    const snapshot = {
+      id: uid(),
+      archivedAt: todayLabel(),
+      archivedAtTs: Date.now(),
+      businessName: setup.businessName,
+      services: JSON.parse(JSON.stringify(setup.services)),
+      openingBalance: setup.openingBalance,
+      records: JSON.parse(JSON.stringify(records)),
+      income: tot.income,
+      expense: tot.expense,
+      closingBalance: tot.closing,
+      dateFrom,
+      dateTo
+    };
+
+    // Keep only last MAX_HISTORY (newest first)
+    history.unshift(snapshot);
+    if(history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
+
+    // Reset current period
+    setup.openingBalance = newOpening;
+    records = [];
+
+    await storageSet(STORAGE_SETUP, setup);
+    await storageSet(STORAGE_RECORDS, records);
+    await storageSet(STORAGE_HISTORY, history);
+
+    closeNewLedgerModal();
+    enterDashboard();
+    showToast(t('ledgerArchived'), 'income');
+  });
+
+  // ---------- History ----------
+  function updateDrawerMeta(){
+    $('drawer-history-count').textContent = String(history.length);
+  }
+
+  function renderHistoryList(){
+    const list = $('history-list');
+    const empty = $('history-empty');
+    list.innerHTML = '';
+    if(!history || history.length === 0){
+      empty.style.display = 'block';
+      updateDrawerMeta();
+      return;
+    }
+    empty.style.display = 'none';
+    history.forEach(snap => {
+      const card = document.createElement('div');
+      card.className = 'history-card';
+      const periodLabel = snap.dateFrom === snap.dateTo
+        ? snap.dateFrom
+        : `${snap.dateFrom} – ${snap.dateTo}`;
+      card.innerHTML = `
+        <div class="hc-date">${t('archivedOn')} ${snap.archivedAt}</div>
+        <div class="hc-title">${escapeHtml(snap.businessName)}</div>
+        <div class="hc-stats">
+          <span>${t('period')}: <strong>${periodLabel}</strong></span>
+          <span>${snap.records.length} ${t('entries')}</span>
+          <span>${t('closingBalanceStat')}: <strong>${fmt(snap.closingBalance)}</strong></span>
+        </div>
+      `;
+      card.addEventListener('click', () => openHistoryView(snap));
+      list.appendChild(card);
+    });
+    updateDrawerMeta();
+  }
+
+  $('drawer-history').addEventListener('click', () => {
+    const panel = $('history-panel');
+    const isOpen = panel.classList.contains('open');
+    $('settings-panel').classList.remove('open');
+    if(isOpen){
+      panel.classList.remove('open');
+    }else{
+      renderHistoryList();
+      panel.classList.add('open');
+    }
+  });
+
+  function openHistoryView(snap){
+    viewingSnapshot = snap;
+    closeDrawer();
+    const periodLabel = snap.dateFrom === snap.dateTo
+      ? snap.dateFrom
+      : `${snap.dateFrom} – ${snap.dateTo}`;
+    $('hist-view-title').textContent = `${snap.businessName} · ${periodLabel}`;
+
+    let rowsHtml = '';
+    if(snap.records.length === 0){
+      rowsHtml = `<tr><td colspan="5"><p class="empty-note">${t('noEntries')}</p></td></tr>`;
+    }else{
+      let running = snap.openingBalance;
+      snap.records.forEach((r, i) => {
+        running += r.type === 'income' ? r.amount : -r.amount;
+        rowsHtml += `
+          <tr>
+            <td class="srno-col">${i + 1}</td>
+            <td>${r.date}</td>
+            <td>${escapeHtml(r.description)}</td>
+            <td class="num ${r.type === 'income' ? 'amt-income' : 'amt-expense'}">${r.type === 'income' ? '+' : '−'}${fmt(r.amount)}</td>
+            <td class="num">${fmt(running)}</td>
+          </tr>`;
+      });
+    }
+
+    $('hist-view-body').innerHTML = `
+      <div class="hist-summary">
+        <div class="hist-stat">
+          <div class="lbl">${t('openingBalanceStat')}</div>
+          <div class="val">${fmt(snap.openingBalance)}</div>
+        </div>
+        <div class="hist-stat income">
+          <div class="lbl">${t('incomeStat')}</div>
+          <div class="val">${fmt(snap.income)}</div>
+        </div>
+        <div class="hist-stat expense">
+          <div class="lbl">${t('expensesStat')}</div>
+          <div class="val">${fmt(snap.expense)}</div>
+        </div>
+        <div class="hist-stat closing">
+          <div class="lbl">${t('closingBalanceStat')}</div>
+          <div class="val">${fmt(snap.closingBalance)}</div>
+        </div>
+      </div>
+      <div class="hist-sheet">
+        <table>
+          <thead>
+            <tr>
+              <th class="srno-col">${t('srNo')}</th>
+              <th>${t('date')}</th>
+              <th>${t('description')}</th>
+              <th class="num">${t('amount')}</th>
+              <th class="num">${t('balance')}</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    `;
+    $('modal-history-view').classList.add('open');
+  }
+
+  function closeHistoryView(){
+    $('modal-history-view').classList.remove('open');
+    viewingSnapshot = null;
+  }
+  $('modal-history-close').addEventListener('click', closeHistoryView);
+  $('modal-history-close2').addEventListener('click', closeHistoryView);
+  $('modal-history-view').addEventListener('click', e => {
+    if(e.target === $('modal-history-view')) closeHistoryView();
+  });
+
+  $('modal-history-print').addEventListener('click', () => {
+    if(!viewingSnapshot) return;
+    const snap = viewingSnapshot;
+    const periodLabel = snap.dateFrom === snap.dateTo
+      ? snap.dateFrom
+      : `${snap.dateFrom} – ${snap.dateTo}`;
+
+    let rowsHtml = '';
+    if(snap.records.length === 0){
+      rowsHtml = `<tr><td colspan="5"><p class="empty-note">${t('noEntries')}</p></td></tr>`;
+    }else{
+      let running = snap.openingBalance;
+      snap.records.forEach((r, i) => {
+        running += r.type === 'income' ? r.amount : -r.amount;
+        rowsHtml += `
+          <tr>
+            <td style="text-align:center;">${i + 1}</td>
+            <td>${r.date}</td>
+            <td>${escapeHtml(r.description)}</td>
+            <td style="text-align:right; ${r.type === 'income' ? 'color:#1f8a5f;' : 'color:#c8492f;'} font-weight:600;">
+              ${r.type === 'income' ? '+' : '−'}${fmt(r.amount)}
+            </td>
+            <td style="text-align:right;">${fmt(running)}</td>
+          </tr>`;
+      });
+    }
+
+    const area = $('history-print-area');
+    area.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; padding-bottom:0.9rem; border-bottom:2.5px solid #d9a94b;">
+        <div>
+          <p style="font-weight:600; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:#b6822f; margin:0 0 0.3rem;">${t('printLedgerStatement')} · ${t('history')}</p>
+          <h1 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.7rem; margin:0 0 0.2rem; color:#14181f;">${escapeHtml(snap.businessName)}</h1>
+          <p style="margin:0; color:#5a5f6c; font-size:0.85rem;">${periodLabel}</p>
+        </div>
+        <div style="text-align:right;">
+          <p style="margin:0; color:#5a5f6c; font-size:0.85rem;">${t('archivedOn')} ${snap.archivedAt}</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.7rem; margin-bottom:1.4rem;">
+        <div style="border:1px solid #dfe1e7; border-radius:6px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.75rem; color:#6b7080;">${t('openingBalanceStat')}</div>
+          <div style="font-weight:600; font-size:1.05rem;">${fmt(snap.openingBalance)}</div>
+        </div>
+        <div style="border:1px solid #dfe1e7; border-radius:6px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.75rem; color:#6b7080;">${t('incomeStat')}</div>
+          <div style="font-weight:600; font-size:1.05rem; color:#1f8a5f;">${fmt(snap.income)}</div>
+        </div>
+        <div style="border:1px solid #dfe1e7; border-radius:6px; padding:0.7rem 0.9rem;">
+          <div style="font-size:0.75rem; color:#6b7080;">${t('expensesStat')}</div>
+          <div style="font-weight:600; font-size:1.05rem; color:#c8492f;">${fmt(snap.expense)}</div>
+        </div>
+        <div style="border:1px solid #dfe1e7; border-radius:6px; padding:0.7rem 0.9rem; background:#faf6ea;">
+          <div style="font-size:0.75rem; color:#6b7080;">${t('closingBalanceStat')}</div>
+          <div style="font-weight:600; font-size:1.05rem; color:#b6822f;">${fmt(snap.closingBalance)}</div>
+        </div>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:0.86rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left; background:#faf6ea; color:#5a5f6c; padding:0.6rem 0.4rem; border-bottom:1.5px solid #dfe1e7;">${t('srNo')}</th>
+            <th style="text-align:left; background:#faf6ea; color:#5a5f6c; padding:0.6rem 0.4rem; border-bottom:1.5px solid #dfe1e7;">${t('date')}</th>
+            <th style="text-align:left; background:#faf6ea; color:#5a5f6c; padding:0.6rem 0.4rem; border-bottom:1.5px solid #dfe1e7;">${t('description')}</th>
+            <th style="text-align:right; background:#faf6ea; color:#5a5f6c; padding:0.6rem 0.4rem; border-bottom:1.5px solid #dfe1e7;">${t('amount')}</th>
+            <th style="text-align:right; background:#faf6ea; color:#5a5f6c; padding:0.6rem 0.4rem; border-bottom:1.5px solid #dfe1e7;">${t('balance')}</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    `;
+
+    document.body.classList.add('printing-history');
+    window.print();
+    setTimeout(() => {
+      document.body.classList.remove('printing-history');
+      area.innerHTML = '';
+    }, 500);
   });
 
   // ---------- Auth ----------
@@ -1287,7 +1922,8 @@
     }
   });
 
-  $('btn-logout').addEventListener('click', async () => {
+  $('drawer-logout').addEventListener('click', async () => {
+    closeDrawer();
     try{ await auth.signOut(); }
     catch(e){ console.error('sign out failed', e); }
   });
@@ -1304,32 +1940,46 @@
   setInterval(updateClock, 1000);
 
   // ---------- Boot ----------
-  // Theme/language apply immediately — they don't depend on being signed in.
   applyTheme(localGet(STORAGE_THEME) === 'light' ? 'light' : 'dark');
   applyLanguage(localGet(STORAGE_LANG) === 'ur' ? 'ur' : 'en');
+
+  // Hide menu button on auth/onboarding screens
+  function syncMenuVisibility(){
+    const dash = $('screen-dashboard');
+    const visible = dash && dash.classList.contains('active');
+    $('btn-menu').style.display = visible ? '' : 'none';
+  }
+  // Observe screen changes roughly via MutationObserver is overkill; call after showScreen
+  const _origShow = showScreen;
+  // monkey-patch not needed — call sync after key transitions
 
   auth.onAuthStateChanged(async (user) => {
     currentUser = user;
     $('loading').style.display = 'none';
 
     if(user){
-      $('btn-logout').style.display = '';
       $('dash-user-email').textContent = user.email || '';
       const savedSetup = await storageGet(STORAGE_SETUP);
       if(savedSetup && savedSetup.businessName && savedSetup.services && savedSetup.services.length){
         setup = savedSetup;
         records = (await storageGet(STORAGE_RECORDS)) || [];
+        history = (await storageGet(STORAGE_HISTORY)) || [];
+        if(!Array.isArray(history)) history = [];
         enterDashboard();
+        $('btn-menu').style.display = '';
       }else{
         setup = null;
         records = [];
+        history = [];
         showScreen('screen-1');
+        $('btn-menu').style.display = 'none';
       }
     }else{
-      $('btn-logout').style.display = 'none';
       setup = null;
       records = [];
+      history = [];
       showScreen('screen-auth');
+      $('btn-menu').style.display = 'none';
     }
   });
 })();
